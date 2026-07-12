@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="./data.js"></script>
+<style>
+  html, body { margin: 0; padding: 0; background: #0B1016; color: #D9D6CF; font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; -webkit-font-smoothing: antialiased; }
+  * { box-sizing: border-box; }
+  a { color: #D9D6CF; } a:hover { color: #E63946; }
+  ::selection { background: #E63946; color: #fff; }
+  @keyframes jkFade { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+  .jk-di { background: none; border: none; }
+  .leaflet-container { background: #0B1016; }
+  .leaflet-popup-content-wrapper { background: #121826; color: #D9D6CF; border: 1px solid #232B3A; border-radius: 4px; box-shadow: 0 6px 18px rgba(0,0,0,0.5); }
+  .leaflet-popup-tip { background: #121826; }
+  .leaflet-popup-close-button { color: #8A94A6; }
+  .leaflet-bar a { background: #121826; color: #D9D6CF; border-color: #232B3A; }
+  .leaflet-bar a:hover { background: #1B2230; color: #ffffff; }
+  @media (max-width: 900px) {
+    [data-el="mapgrid"] { grid-template-columns: minmax(0, 1fr) !important; }
+    [data-el="map"] { height: 60vh !important; }
+    [data-el="panel"] { max-height: none !important; }
+    [data-el="counters"] { display: none !important; }
+    [data-el="hero-h"] { font-size: 38px !important; }
+    [data-el="hero"] { padding: 56px 20px 48px !important; }
+    [data-el="container"] { padding-left: 20px !important; padding-right: 20px !important; }
+  }
+  @media print {
+    #app { display: none !important; }
+    #printdoc { display: block !important; }
+    body { background: #ffffff !important; color: #111111 !important; }
+  }
+</style>
+</helmet>
+
+<div id="app">
+
+  <!-- ============ Липкий хедер ============ -->
+  <header style="position: sticky; top: 0; z-index: 1100; background: rgba(11,16,22,0.92); backdrop-filter: blur(8px); border-bottom: 1px solid #1B2230">
+    <div data-el="container" style="max-width: 1160px; margin: 0 auto; padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px">
+      <div style="font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; font-size: 13px; letter-spacing: 0.04em; white-space: nowrap"><span style="color: #E63946; font-weight: 700">JAPAN KIT</span><span style="color: #5A6474"> · Токио → Осака · 10 дней</span></div>
+      <nav data-el="counters" style="display: flex; gap: 22px">
+        <button onClick="{{ goPre }}" style="{{ navPreStyle }}">{{ preHdrLabel }}</button>
+        <button onClick="{{ goArr }}" style="{{ navArrStyle }}">{{ arrHdrLabel }}</button>
+        <button onClick="{{ goMap }}" style="{{ navMapStyle }}">{{ ptsHdrLabel }}</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ============ Хиро ============ -->
+  <section data-el="hero" style="max-width: 1160px; margin: 0 auto; padding: 96px 24px 72px">
+    <div style="font: 500 12px ui-monospace, 'SF Mono', Menlo, monospace; color: #E63946; letter-spacing: 0.16em; text-transform: uppercase">Маршрут · 10 дней · 4 города · апрель</div>
+    <h1 data-el="hero-h" style="font-size: 62px; line-height: 1.06; font-weight: 700; letter-spacing: -0.02em; color: #EDEAE3; margin: 20px 0 24px; max-width: 860px; text-wrap: balance">Токио → Осака: <em style="font-style: italic; color: #E63946">10 дней без суеты</em></h1>
+    <p style="font-size: 18px; line-height: 1.6; color: #A7B0BF; max-width: 620px; margin: 0">Чеклисты подготовки и подробный маршрут на карте. Прогресс сохраняется в этом браузере.</p>
+  </section>
+
+  <!-- ============ / 01 и / 02 — чеклисты ============ -->
+  <sc-for list="{{ sections }}" as="sec" hint-placeholder-count="2">
+    <section id="{{ sec.anchor }}" style="border-top: 1px solid #1B2230">
+      <div data-el="container" style="max-width: 1160px; margin: 0 auto; padding: 72px 24px 80px">
+        <div style="max-width: 720px">
+          <div style="font: 500 12px ui-monospace, 'SF Mono', Menlo, monospace; color: #5A6474; letter-spacing: 0.12em">{{ sec.num }}</div>
+          <h2 style="font-size: 34px; line-height: 1.15; color: #EDEAE3; margin: 14px 0 10px; font-weight: 700; letter-spacing: -0.01em">Чеклист <em style="font-style: italic; color: #E63946">{{ sec.title }}</em></h2>
+          <p style="font-size: 15px; line-height: 1.6; color: #A7B0BF; margin: 0; max-width: 560px">{{ sec.sub }}</p>
+
+          <div style="display: flex; gap: 20px; align-items: center; margin: 30px 0 4px; flex-wrap: wrap">
+            <div style="display: flex; border: 1px solid #232B3A; border-radius: 3px; overflow: hidden">
+              <button onClick="{{ sec.setBrief }}" style="{{ sec.briefBtnStyle }}">Кратко</button>
+              <button onClick="{{ sec.setDetail }}" style="{{ sec.detailBtnStyle }}">Подробно</button>
+            </div>
+            <button onClick="{{ sec.toggleHide }}" style="display: flex; align-items: center; gap: 8px; background: none; border: none; cursor: pointer; padding: 0; font: 500 12px ui-monospace, 'SF Mono', Menlo, monospace; color: #8A94A6">
+              <span style="{{ sec.switchStyle }}"><span style="{{ sec.knobStyle }}"></span></span>
+              <span>Скрыть выполненное</span>
+            </button>
+          </div>
+
+          <sc-for list="{{ sec.cats }}" as="cat" hint-placeholder-count="4">
+            <div style="margin-top: 38px">
+              <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px">
+                <h3 style="font-size: 14px; font-weight: 600; color: #EDEAE3; margin: 0; letter-spacing: 0.06em; text-transform: uppercase">{{ cat.name }}</h3>
+                <span style="font: 500 11px ui-monospace, 'SF Mono', Menlo, monospace; color: #5A6474">{{ cat.countLabel }}</span>
+              </div>
+              <div style="height: 2px; background: #1B2230; margin: 10px 0 4px; position: relative"><div style="{{ cat.barStyle }}"></div></div>
+
+              <sc-for list="{{ cat.rows }}" as="item" hint-placeholder-count="4">
+                <div style="border-bottom: 1px solid #151C28">
+                  <div style="display: flex; align-items: center; gap: 12px; padding: 13px 0 13px 2px">
+                    <button onClick="{{ item.toggle }}" aria-label="Отметить пункт" style="{{ item.boxStyle }}">
+                      <sc-if value="{{ item.checked }}" hint-placeholder-val="{{ false }}"><span style="color: #0B1016; font: 700 12px system-ui; line-height: 1">✓</span></sc-if>
+                    </button>
+                    <sc-if value="{{ item.showNum }}" hint-placeholder-val="{{ false }}"><span style="font: 500 11px ui-monospace, 'SF Mono', Menlo, monospace; color: #E63946; min-width: 20px">{{ item.numLabel }}</span></sc-if>
+                    <button onClick="{{ item.expand }}" style="{{ item.labelStyle }}">{{ item.label }}</button>
+                    <sc-if value="{{ item.canDelete }}" hint-placeholder-val="{{ false }}">
+                      <button onClick="{{ item.del }}" aria-label="Удалить пункт" style="background: none; border: none; cursor: pointer; color: #5A6474; font-size: 16px; line-height: 1; padding: 2px 4px" style-hover="color: #E63946">×</button>
+                    </sc-if>
+                    <sc-if value="{{ item.hasDl }}" hint-placeholder-val="{{ false }}">
+                      <span style="font: 500 11px ui-monospace, 'SF Mono', Menlo, monospace; color: #5A6474; border: 1px solid #232B3A; border-radius: 2px; padding: 2px 7px; white-space: nowrap">{{ item.dl }}</span>
+                    </sc-if>
+                  </div>
+                  <sc-if value="{{ item.expanded }}" hint-placeholder-val="{{ false }}">
+                    <div style="padding: 0 0 15px 32px; max-width: 600px; font-size: 13.5px; line-height: 1.65; color: #A7B0BF; animation: jkFade 0.25s ease">{{ item.desc }}</div>
+                  </sc-if>
+                </div>
+              </sc-for>
+
+              <sc-if value="{{ cat.adding }}" hint-placeholder-val="{{ false }}">
+                <div style="display: flex; gap: 8px; padding: 12px 0; animation: jkFade 0.2s ease">
+                  <input value="{{ cat.addText }}" onChange="{{ cat.addChange }}" onKeyDown="{{ cat.addKey }}" autoFocus="{{ true }}" placeholder="Новый пункт…" style="flex: 1; min-width: 0; background: #0F1520; border: 1px solid #232B3A; border-radius: 3px; color: #EDEAE3; padding: 8px 10px; font-size: 13.5px; outline: none; font-family: inherit"></input>
+                  <button onClick="{{ cat.addSubmit }}" style="background: #E63946; border: 1px solid #E63946; color: #ffffff; border-radius: 3px; padding: 8px 14px; cursor: pointer; font: 600 12px ui-monospace, 'SF Mono', Menlo, monospace">Добавить</button>
+                  <button onClick="{{ cat.addCancel }}" style="background: none; border: 1px solid #232B3A; color: #8A94A6; border-radius: 3px; padding: 8px 12px; cursor: pointer; font: 500 12px ui-monospace, 'SF Mono', Menlo, monospace">Отмена</button>
+                </div>
+              </sc-if>
+              <sc-if value="{{ cat.notAdding }}" hint-placeholder-val="{{ true }}">
+                <button onClick="{{ cat.addClick }}" style="background: none; border: none; cursor: pointer; padding: 11px 0 0 2px; font: 500 12px ui-monospace, 'SF Mono', Menlo, monospace; color: #5A6474; letter-spacing: 0.04em" style-hover="color: #E63946">+ добавить пункт</button>
+              </sc-if>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+  </sc-for>
+
+  <!-- ============ / 03 — маршрут на карте ============ -->
+  <section id="sec-map" style="border-top: 1px solid #1B2230">
+    <div data-el="container" style="max-width: 1160px; margin: 0 auto; padding: 72px 24px 80px">
+      <div style="font: 500 12px ui-monospace, 'SF Mono', Menlo, monospace; color: #5A6474; letter-spacing: 0.12em">/ 03</div>
+      <h2 style="font-size: 34px; line-height: 1.15; color: #EDEAE3; margin: 14px 0 10px; font-weight: 700; letter-spacing: -0.01em">Маршрут <em style="font-style: italic; color: #E63946">на карте</em></h2>
+      <p style="font-size: 15px; line-height: 1.6; color: #A7B0BF; margin: 0; max-width: 560px">Клик по дню — карта зумится на его точки. Клик по точке в панели дня — центрирует карту.</p>
+
+      <div style="display: flex; gap: 8px; flex-wrap: wrap; margin: 30px 0 12px">
+        <button onClick="{{ allClick }}" style="{{ allBtnStyle }}">Весь маршрут</button>
+        <sc-for list="{{ dayBtns }}" as="d" hint-placeholder-count="10">
+          <button onClick="{{ d.click }}" style="{{ d.style }}"><span style="{{ d.dotStyle }}"></span><span>{{ d.label }}</span><span style="opacity: 0.65">{{ d.city }}</span></button>
+        </sc-for>
+      </div>
+      <div style="font: 500 12px ui-monospace, 'SF Mono', Menlo, monospace; color: #8A94A6; margin: 0 0 18px">{{ daySummary }}</div>
+
+      <div data-el="mapgrid" style="display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 20px; align-items: start">
+        <div style="position: relative; border: 1px solid #1B2230; border-radius: 4px; overflow: hidden">
+          <div data-el="map" ref="{{ mapRef }}" style="height: 560px; background: #0B1016"></div>
+          <sc-if value="{{ tilesFailed }}" hint-placeholder-val="{{ false }}">
+            <div style="position: absolute; inset: 0; z-index: 800; background: #0F1520; overflow: auto; padding: 20px">
+              <div style="font: 600 12px ui-monospace, 'SF Mono', Menlo, monospace; color: #E63946; letter-spacing: 0.08em; margin-bottom: 12px">КАРТА НЕ ЗАГРУЗИЛАСЬ — ТОЧКИ СПИСКОМ</div>
+              <sc-for list="{{ fallbackRows }}" as="r" hint-placeholder-count="6">
+                <div style="font-size: 13px; color: #A7B0BF; padding: 5px 0; border-bottom: 1px solid #1B2230; display: flex; gap: 10px"><span style="font: 600 11px ui-monospace, 'SF Mono', Menlo, monospace; color: #E63946; min-width: 30px">{{ r.day }}</span><span style="flex: 1">{{ r.name }}</span><span style="font: 500 11px ui-monospace, 'SF Mono', Menlo, monospace; color: #5A6474">{{ r.arr }}</span></div>
+              </sc-for>
+            </div>
+          </sc-if>
+        </div>
+
+        <aside data-el="panel" style="border: 1px solid #1B2230; border-radius: 4px; max-height: 560px; overflow: auto; padding: 18px 18px 10px">
+          <sc-if value="{{ panelIsDay }}" hint-placeholder-val="{{ false }}">
+            <div style="{{ panelKickerStyle }}">{{ panelKicker }}</div>
+            <div style="font-size: 20px; font-weight: 700; color: #EDEAE3; margin: 6px 0 3px; letter-spacing: -0.01em">{{ panelTitle }}</div>
+            <div style="font: 500 11px ui-monospace, 'SF Mono', Menlo, monospace; color: #5A6474; margin-bottom: 12px">{{ panelSummary }}</div>
+            <sc-for list="{{ panelEntries }}" as="e" hint-placeholder-count="5">
+              <sc-if value="{{ e.isPoint }}" hint-placeholder-val="{{ true }}">
+                <button onClick="{{ e.click }}" style="display: grid; grid-template-columns: 48px minmax(0, 1fr); gap: 10px; width: 100%; text-align: left; background: none; border: none; border-top: 1px solid #151C28; cursor: pointer; padding: 11px 4px; border-radius: 2px; font-family: inherit" style-hover="background: #0F1520">
+                  <span style="font: 600 12px ui-monospace, 'SF Mono', Menlo, monospace; color: #E63946; padding-top: 1px">{{ e.time }}</span>
+                  <span style="display: block">
+                    <span style="display: block; font-size: 14px; font-weight: 600; color: #EDEAE3; line-height: 1.35">{{ e.name }}</span>
+                    <sc-if value="{{ e.hasDur }}" hint-placeholder-val="{{ false }}"><span style="display: block; font: 500 11px ui-monospace, 'SF Mono', Menlo, monospace; color: #5A6474; margin-top: 3px">{{ e.dur }}</span></sc-if>
+                    <span style="display: block; font-size: 12.5px; line-height: 1.55; color: #A7B0BF; margin-top: 4px">{{ e.desc }}</span>
+                  </span>
+                </button>
+              </sc-if>
+              <sc-if value="{{ e.isLeg }}" hint-placeholder-val="{{ false }}">
+                <div style="display: flex; align-items: center; gap: 9px; padding: 7px 4px 7px 62px; font: 500 11px ui-monospace, 'SF Mono', Menlo, monospace; color: #8A94A6">
+                  <span style="border: 1px solid #232B3A; border-radius: 2px; padding: 2px 6px; letter-spacing: 0.07em; color: #8A94A6; white-space: nowrap">{{ e.tag }}</span>
+                  <span>{{ e.legText }}</span>
+                </div>
+              </sc-if>
+            </sc-for>
+          </sc-if>
+          <sc-if value="{{ panelIsAll }}" hint-placeholder-val="{{ true }}">
+            <div style="font: 500 11px ui-monospace, 'SF Mono', Menlo, monospace; color: #5A6474; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px">Выберите день</div>
+            <sc-for list="{{ dayList }}" as="d" hint-placeholder-count="10">
+              <button onClick="{{ d.click }}" style="display: flex; justify-content: space-between; align-items: baseline; gap: 10px; width: 100%; background: none; border: none; border-top: 1px solid #151C28; cursor: pointer; padding: 11px 4px; text-align: left; border-radius: 2px; font-family: inherit" style-hover="background: #0F1520">
+                <span style="display: flex; gap: 9px; align-items: baseline; min-width: 0"><span style="{{ d.labStyle }}">{{ d.label }}</span><span style="font-size: 13.5px; color: #EDEAE3; font-weight: 600; white-space: nowrap">{{ d.city }}</span></span>
+                <span style="font-size: 12px; color: #5A6474; text-align: right">{{ d.title }}</span>
+              </button>
+            </sc-for>
+          </sc-if>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ / 04 — экспорт ============ -->
+  <section id="sec-export" style="border-top: 1px solid #1B2230">
+    <div data-el="container" style="max-width: 1160px; margin: 0 auto; padding: 72px 24px 96px">
+      <div style="max-width: 720px">
+        <div style="font: 500 12px ui-monospace, 'SF Mono', Menlo, monospace; color: #5A6474; letter-spacing: 0.12em">/ 04</div>
+        <h2 style="font-size: 34px; line-height: 1.15; color: #EDEAE3; margin: 14px 0 10px; font-weight: 700; letter-spacing: -0.01em">Экспорт <em style="font-style: italic; color: #E63946">плана</em></h2>
+        <p style="font-size: 15px; line-height: 1.6; color: #A7B0BF; margin: 0; max-width: 560px">Оба чеклиста с текущими отметками и весь маршрут с транспортом — в Markdown или на печать.</p>
+        <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 30px">
+          <button onClick="{{ copyClick }}" style="background: transparent; border: 1px solid #39435A; color: #EDEAE3; padding: 12px 20px; border-radius: 3px; cursor: pointer; font: 600 12px ui-monospace, 'SF Mono', Menlo, monospace; letter-spacing: 0.08em; text-transform: uppercase; transition: all 0.15s ease" style-hover="border-color: #E63946; color: #E63946">{{ copyLabel }}</button>
+          <button onClick="{{ dlClick }}" style="background: transparent; border: 1px solid #39435A; color: #EDEAE3; padding: 12px 20px; border-radius: 3px; cursor: pointer; font: 600 12px ui-monospace, 'SF Mono', Menlo, monospace; letter-spacing: 0.08em; text-transform: uppercase; transition: all 0.15s ease" style-hover="border-color: #E63946; color: #E63946">Скачать .md</button>
+          <button onClick="{{ printClick }}" style="background: transparent; border: 1px solid #39435A; color: #EDEAE3; padding: 12px 20px; border-radius: 3px; cursor: pointer; font: 600 12px ui-monospace, 'SF Mono', Menlo, monospace; letter-spacing: 0.08em; text-transform: uppercase; transition: all 0.15s ease" style-hover="border-color: #E63946; color: #E63946">Печать / PDF</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Футер ============ -->
+  <footer style="border-top: 1px solid #1B2230">
+    <div data-el="container" style="max-width: 1160px; margin: 0 auto; padding: 24px; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; font: 500 11px ui-monospace, 'SF Mono', Menlo, monospace; color: #5A6474">
+      <span><span style="color: #E63946">JAPAN KIT</span> · личный планировщик · всё сохраняется локально в этом браузере</span>
+      <span>Токио → Хаконэ → Киото → Нара → Осака</span>
+    </div>
+  </footer>
+
+</div>
+
+<!-- ============ Печатная версия (светлая, без карты) ============ -->
+<div id="printdoc" style="display: none; background: #ffffff; color: #111111; font-family: system-ui, -apple-system, sans-serif; padding: 8px">
+  <h1 style="font-size: 22px; margin: 0 0 4px">JAPAN KIT — Токио → Осака, 10 дней</h1>
+  <div style="font-size: 12px; color: #555555; margin-bottom: 14px">Чеклисты подготовки и маршрут по дням · апрель</div>
+  <sc-for list="{{ printSections }}" as="ps" hint-placeholder-count="2">
+    <h2 style="font-size: 15px; margin: 16px 0 4px; border-bottom: 1px solid #dddddd; padding-bottom: 3px">{{ ps.title }}</h2>
+    <sc-for list="{{ ps.cats }}" as="pc" hint-placeholder-count="3">
+      <h3 style="font-size: 12.5px; margin: 10px 0 3px; text-transform: uppercase; letter-spacing: 0.04em">{{ pc.name }}</h3>
+      <sc-for list="{{ pc.items }}" as="pi" hint-placeholder-count="4"><div style="font-size: 12px; padding: 1.5px 0">{{ pi.text }}</div></sc-for>
+    </sc-for>
+  </sc-for>
+  <h2 style="font-size: 15px; margin: 18px 0 4px; border-bottom: 1px solid #dddddd; padding-bottom: 3px">/ 03 Маршрут по дням</h2>
+  <sc-for list="{{ printDays }}" as="pd" hint-placeholder-count="10">
+    <h3 style="font-size: 12.5px; margin: 10px 0 3px">{{ pd.title }}</h3>
+    <sc-for list="{{ pd.lines }}" as="pl" hint-placeholder-count="5"><div style="font-size: 12px; padding: 1.5px 0; white-space: pre-wrap">{{ pl.text }}</div></sc-for>
+  </sc-for>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;showCosts&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Маршрут&quot;},&quot;tiles&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;тёмные&quot;,&quot;светлые&quot;],&quot;default&quot;:&quot;тёмные&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Карта&quot;}}">
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.mapRef = React.createRef();
+    let saved = {};
+    try { saved = JSON.parse(localStorage.getItem('japankit_v1') || '{}') || {}; } catch (e) { saved = {}; }
+    this.state = {
+      checked: saved.checked || {},
+      custom: saved.custom || {},
+      modes: saved.modes || { pre: 'brief', arr: 'brief' },
+      hideDone: saved.hideDone || { pre: false, arr: false },
+      day: saved.day || null,
+      expanded: {}, adding: {}, addText: {},
+      tilesFailed: false, copied: false, activeSection: ''
+    };
+    this._tileErr = 0;
+  }
+
+  d() { return window.JK_DATA || { cities: {}, days: [], pre: { cats: [] }, arrival: { cats: [] } }; }
+  mono() { return "ui-monospace,'SF Mono',Menlo,Consolas,monospace"; }
+  accent() { return '#E63946'; }
+  cityColor(city) { return this.d().cities[city] || '#8A94A6'; }
+  plural(n, forms) { const a = n % 10, b = n % 100; if (a === 1 && b !== 11) return forms[0]; if (a >= 2 && a <= 4 && (b < 12 || b > 14)) return forms[1]; return forms[2]; }
+  yen(n) { return '¥' + String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' '); }
+
+  componentDidMount() {
+    this._poll = setInterval(() => {
+      if (window.L && window.JK_DATA && this.mapRef.current && !this.map) { clearInterval(this._poll); this.initMap(); this.forceUpdate(); }
+    }, 120);
+    this._onScroll = () => {
+      if (this._scrollRaf) return;
+      this._scrollRaf = requestAnimationFrame(() => {
+        this._scrollRaf = null;
+        let act = '';
+        ['sec-pre', 'sec-arr', 'sec-map', 'sec-export'].forEach(id => {
+          const el = document.getElementById(id);
+          if (el && el.getBoundingClientRect().top < 170) act = id;
+        });
+        if (act !== this.state.activeSection) this.setState({ activeSection: act });
+      });
+    };
+    window.addEventListener('scroll', this._onScroll, { passive: true });
+  }
+  componentWillUnmount() {
+    clearInterval(this._poll);
+    window.removeEventListener('scroll', this._onScroll);
+    if (this.map) { this.map.remove(); this.map = null; }
+  }
+  componentDidUpdate(prevProps) {
+    try {
+      localStorage.setItem('japankit_v1', JSON.stringify({
+        checked: this.state.checked, custom: this.state.custom, modes: this.state.modes,
+        hideDone: this.state.hideDone, day: this.state.day
+      }));
+    } catch (e) {}
+    if (prevProps && prevProps.tiles !== this.props.tiles && this.tileLayer) this.tileLayer.setUrl(this.tileUrl());
+  }
+
+  /* ---------- карта ---------- */
+  tileUrl() {
+    return this.props.tiles === 'светлые'
+      ? 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png'
+      : 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png';
+  }
+  makeIcon(color, num, dim) {
+    const L = window.L, size = num ? 22 : 12, bg = dim ? '#242C3B' : color;
+    const html = '<div style="width:' + size + 'px;height:' + size + 'px;border-radius:50%;background:' + bg +
+      ';border:2px solid #0B1016;box-sizing:border-box;display:flex;align-items:center;justify-content:center;font:700 11px ' +
+      this.mono() + ';color:#0B1016;opacity:' + (dim ? '0.5' : '1') + '">' + (num || '') + '</div>';
+    return L.divIcon({ className: 'jk-di', html, iconSize: [size, size], iconAnchor: [size / 2, size / 2], popupAnchor: [0, -size / 2 - 2] });
+  }
+  initMap() {
+    const L = window.L, data = this.d(), el = this.mapRef.current;
+    const map = L.map(el, { zoomControl: true, scrollWheelZoom: true });
+    this.map = map;
+    this.tileLayer = L.tileLayer(this.tileUrl(), { maxZoom: 19, subdomains: 'abcd', attribution: '&copy; OpenStreetMap · &copy; CARTO' });
+    this.tileLayer.on('tileerror', () => { this._tileErr++; if (this._tileErr > 5 && !this.state.tilesFailed) this.setState({ tilesFailed: true }); });
+    this.tileLayer.on('tileload', () => { this._tileErr = 0; if (this.state.tilesFailed) this.setState({ tilesFailed: false }); });
+    this.tileLayer.addTo(map);
+    this.lineGroup = L.layerGroup().addTo(map);
+    this.markers = [];
+    data.days.forEach(day => day.points.forEach((pt, i) => {
+      const color = this.cityColor(pt.city || day.city);
+      const m = L.marker(pt.coords, { icon: this.makeIcon(color, null, false) }).addTo(map);
+      m.bindPopup('<div style="min-width:190px;max-width:240px"><div style="font:600 14px system-ui;color:#EDEAE3">' + pt.name +
+        '</div><div style="font:11px ' + this.mono() + ';color:#8A94A6;margin:5px 0">' + day.label + ' · прибытие ' + pt.arr +
+        (pt.dur !== '—' ? ' · ' + pt.dur : '') + '</div><div style="font:12.5px/1.55 system-ui;color:#A7B0BF">' + pt.desc + '</div></div>');
+      this.markers.push({ m, day, pt, i });
+    }));
+    this.updateMap(true);
+  }
+  updateMap(initial) {
+    if (!this.map || !window.L) return;
+    const L = window.L, data = this.d();
+    const dayObj = data.days.find(x => x.id === this.state.day) || null;
+    this.lineGroup.clearLayers();
+    (this.markers || []).forEach(rec => {
+      const isSel = dayObj && rec.day.id === dayObj.id;
+      const dim = !!dayObj && !isSel;
+      rec.m.setIcon(this.makeIcon(this.cityColor(rec.pt.city || rec.day.city), isSel ? (rec.i + 1) : null, dim));
+      rec.m.setZIndexOffset(isSel ? 1000 : 0);
+    });
+    if (dayObj) {
+      const coords = dayObj.points.map(p => p.coords);
+      L.polyline(coords, { color: this.cityColor(dayObj.city), weight: 2, opacity: 0.9 }).addTo(this.lineGroup);
+      this.map.flyToBounds(L.latLngBounds(coords).pad(0.3), { duration: 0.8 });
+    } else {
+      const all = [];
+      data.days.forEach(day => day.points.forEach(p => all.push({ c: p.coords, city: p.city || day.city })));
+      for (let i = 1; i < all.length; i++) {
+        if (all[i].city !== all[i - 1].city) {
+          L.polyline([all[i - 1].c, all[i].c], { color: '#7B8598', weight: 1.5, dashArray: '4 7', opacity: 0.55 }).addTo(this.lineGroup);
+        }
+      }
+      if (all.length) {
+        const b = L.latLngBounds(all.map(x => x.c)).pad(0.08);
+        if (initial) this.map.fitBounds(b); else this.map.flyToBounds(b, { duration: 0.8 });
+      }
+    }
+  }
+  selectDay(id) { this.setState({ day: id }); setTimeout(() => this.updateMap(false), 0); }
+  centerPoint(dayId, idx) {
+    const rec = (this.markers || []).find(r => r.day.id === dayId && r.i === idx);
+    if (rec && this.map) { this.map.flyTo(rec.pt.coords, 15, { duration: 0.7 }); setTimeout(() => rec.m.openPopup(), 750); }
+  }
+  scrollToId(id) {
+    const el = document.getElementById(id);
+    if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 60, behavior: 'smooth' });
+  }
+
+  /* ---------- чеклисты ---------- */
+  secData(key) { return key === 'pre' ? this.d().pre : this.d().arrival; }
+  catItems(cat) { return cat.items.concat((this.state.custom[cat.id] || []).map(x => Object.assign({}, x, { custom: true }))); }
+  counts(key) {
+    let done = 0, total = 0;
+    (this.secData(key).cats || []).forEach(c => this.catItems(c).forEach(it => { total++; if (this.state.checked[it.id]) done++; }));
+    return { done, total };
+  }
+  toggleItem(id) { const c = Object.assign({}, this.state.checked); c[id] = !c[id]; this.setState({ checked: c }); }
+  toggleExpand(id, cur) { const e = Object.assign({}, this.state.expanded); e[id] = !cur; this.setState({ expanded: e }); }
+  setMode(key, m) { const mo = Object.assign({}, this.state.modes); mo[key] = m; this.setState({ modes: mo, expanded: {} }); }
+  setHide(key, v) { const h = Object.assign({}, this.state.hideDone); h[key] = v; this.setState({ hideDone: h }); }
+  setAdding(catId, v) {
+    const a = Object.assign({}, this.state.adding); a[catId] = v;
+    const t = Object.assign({}, this.state.addText); if (!v) t[catId] = '';
+    this.setState({ adding: a, addText: t });
+  }
+  addItem(catId) {
+    const text = (this.state.addText[catId] || '').trim();
+    if (!text) return;
+    const cu = Object.assign({}, this.state.custom);
+    cu[catId] = (cu[catId] || []).concat([{ id: 'u' + Date.now() + Math.floor(Math.random() * 1000), label: text, dl: '', desc: '' }]);
+    const t = Object.assign({}, this.state.addText); t[catId] = '';
+    const a = Object.assign({}, this.state.adding); a[catId] = false;
+    this.setState({ custom: cu, addText: t, adding: a });
+  }
+  delItem(catId, id) {
+    const cu = Object.assign({}, this.state.custom);
+    cu[catId] = (cu[catId] || []).filter(x => x.id !== id);
+    const ck = Object.assign({}, this.state.checked); delete ck[id];
+    this.setState({ custom: cu, checked: ck });
+  }
+
+  buildSection(def) {
+    const key = def.key, st = this.state, acc = this.accent(), mono = this.mono();
+    const mode = st.modes[key] || 'brief', hide = !!st.hideDone[key];
+    const cats = (this.secData(key).cats || []).map(cat => {
+      const items = this.catItems(cat);
+      const done = items.filter(it => st.checked[it.id]).length;
+      const rows = [];
+      items.forEach((it, idx) => {
+        const checked = !!st.checked[it.id];
+        if (hide && checked) return;
+        const hasDesc = !!it.desc;
+        const expanded = hasDesc && (st.expanded[it.id] !== undefined ? st.expanded[it.id] : mode === 'detail');
+        rows.push({
+          key: it.id, label: it.label, desc: it.desc || '', dl: it.dl || '', hasDl: !!it.dl,
+          checked, expanded, showNum: !!def.numbered,
+          numLabel: def.numbered ? String(idx + 1).padStart(2, '0') : '',
+          canDelete: !!it.custom,
+          toggle: () => this.toggleItem(it.id),
+          expand: () => { if (hasDesc) this.toggleExpand(it.id, expanded); },
+          del: () => this.delItem(cat.id, it.id),
+          boxStyle: {
+            width: 18, height: 18, minWidth: 18, borderRadius: 3, cursor: 'pointer', padding: 0,
+            border: '1px solid ' + (checked ? acc : '#39435A'),
+            background: checked ? acc : 'transparent',
+            display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.15s ease'
+          },
+          labelStyle: {
+            background: 'none', border: 'none', padding: 0, cursor: hasDesc ? 'pointer' : 'default',
+            textAlign: 'left', flex: 1, minWidth: 0, fontFamily: 'inherit', fontSize: '14.5px', lineHeight: 1.4,
+            color: checked ? '#5A6474' : '#D9D6CF',
+            textDecoration: checked ? 'line-through' : 'none', textDecorationColor: '#39435A',
+            transition: 'color 0.15s ease'
+          }
+        });
+      });
+      const pct = items.length ? Math.round(done / items.length * 100) : 0;
+      const adding = !!st.adding[cat.id];
+      return {
+        key: cat.id, name: cat.name, countLabel: done + '/' + items.length,
+        barStyle: { position: 'absolute', left: 0, top: 0, bottom: 0, width: pct + '%', background: acc, transition: 'width 0.35s ease' },
+        rows, adding, notAdding: !adding,
+        addText: st.addText[cat.id] || '',
+        addClick: () => this.setAdding(cat.id, true),
+        addCancel: () => this.setAdding(cat.id, false),
+        addChange: (e) => { const t = Object.assign({}, this.state.addText); t[cat.id] = e.target.value; this.setState({ addText: t }); },
+        addKey: (e) => { if (e.key === 'Enter') this.addItem(cat.id); if (e.key === 'Escape') this.setAdding(cat.id, false); },
+        addSubmit: () => this.addItem(cat.id)
+      };
+    });
+    const segBase = { border: 'none', cursor: 'pointer', padding: '6px 13px', font: '500 12px ' + mono, letterSpacing: '0.04em', transition: 'all 0.15s ease' };
+    return {
+      key, anchor: def.anchor, num: def.num, title: def.title, sub: def.sub, cats,
+      setDetail: () => this.setMode(key, 'detail'),
+      setBrief: () => this.setMode(key, 'brief'),
+      detailBtnStyle: Object.assign({}, segBase, mode === 'detail' ? { background: '#1B2230', color: '#EDEAE3' } : { background: 'transparent', color: '#5A6474' }),
+      briefBtnStyle: Object.assign({}, segBase, mode === 'brief' ? { background: '#1B2230', color: '#EDEAE3' } : { background: 'transparent', color: '#5A6474' }),
+      toggleHide: () => this.setHide(key, !hide),
+      switchStyle: { width: 30, height: 16, borderRadius: 9, border: '1px solid ' + (hide ? acc : '#39435A'), background: hide ? 'rgba(230,57,70,0.22)' : 'transparent', position: 'relative', display: 'inline-block', transition: 'all 0.2s ease' },
+      knobStyle: { position: 'absolute', top: 2, left: hide ? 15 : 2, width: 10, height: 10, borderRadius: '50%', background: hide ? acc : '#5A6474', transition: 'all 0.2s ease' }
+    };
+  }
+
+  /* ---------- экспорт ---------- */
+  legCost(leg, forceShow) {
+    if (leg.cost) return (leg.note === '≈' ? '~' : '') + this.yen(leg.cost);
+    return leg.note || 'бесплатно';
+  }
+  buildMD() {
+    const d = this.d(), ck = this.state.checked;
+    let md = '# JAPAN KIT — Токио → Осака, 10 дней\n';
+    [['pre', '/ 01 До вылета'], ['arr', '/ 02 Сразу по прилёту']].forEach(pair => {
+      const c = this.counts(pair[0]);
+      md += '\n## ' + pair[1] + ' (' + c.done + '/' + c.total + ')\n';
+      this.secData(pair[0]).cats.forEach(cat => {
+        md += '\n### ' + cat.name + '\n';
+        this.catItems(cat).forEach(it => {
+          md += '- [' + (ck[it.id] ? 'x' : ' ') + '] ' + it.label + (it.dl ? ' _(' + it.dl + ')_' : '') + '\n';
+        });
+      });
+    });
+    md += '\n## / 03 Маршрут\n';
+    d.days.forEach(day => {
+      md += '\n### ' + day.label + ' · ' + day.city + ' — ' + day.title + '\n';
+      day.points.forEach((p, i) => {
+        md += '- **' + p.arr + '** ' + p.name + (p.dur !== '—' ? ' (' + p.dur + ')' : '') + ' — ' + p.desc + '\n';
+        const leg = day.legs[i];
+        if (leg) md += '    - → ' + leg.tag + ' ' + leg.line + ' · ' + leg.time + ' · ' + this.legCost(leg) + '\n';
+      });
+    });
+    return md;
+  }
+  copyDone() { this.setState({ copied: true }); setTimeout(() => this.setState({ copied: false }), 2000); }
+  copyMD() {
+    const md = this.buildMD();
+    const fallback = () => {
+      const t = document.createElement('textarea');
+      t.value = md; document.body.appendChild(t); t.select();
+      try { document.execCommand('copy'); this.copyDone(); } catch (e) {}
+      document.body.removeChild(t);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(md).then(() => this.copyDone(), fallback);
+    else fallback();
+  }
+  downloadMD() {
+    const blob = new Blob([this.buildMD()], { type: 'text/markdown;charset=utf-8' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob); a.download = 'japan-kit.md';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(a.href), 1500);
+  }
+
+  dayInfo(day) {
+    const mins = day.points.reduce((s, p) => s + (p.durMin || 0), 0);
+    const cost = day.legs.reduce((s, l) => s + (l.cost || 0), 0);
+    const h = String(Math.round(mins / 30) / 2).replace('.', ',');
+    return { pts: day.points.length, hours: h, cost };
+  }
+
+  /* ---------- renderVals ---------- */
+  renderVals() {
+    const d = this.d(), st = this.state, acc = this.accent(), mono = this.mono();
+    const showCosts = this.props.showCosts !== false;
+
+    const sections = [
+      { key: 'pre', num: '/ 01', anchor: 'sec-pre', title: '«До вылета»', numbered: false,
+        sub: 'Всё, что нужно закрыть заранее — с дедлайнами. Клик по названию пункта раскрывает пояснение.' },
+      { key: 'arr', num: '/ 02', anchor: 'sec-arr', title: '«Сразу по прилёту»', numbered: true,
+        sub: 'Первые 2–3 часа в аэропорту решают комфорт всей поездки. Шаги — по порядку.' }
+    ].map(x => this.buildSection(x));
+
+    const preC = this.counts('pre'), arrC = this.counts('arr');
+    const totalPts = d.days.reduce((s, x) => s + x.points.length, 0);
+    const totalCost = d.days.reduce((s, x) => s + x.legs.reduce((q, l) => q + (l.cost || 0), 0), 0);
+
+    const navStyle = (id) => ({
+      background: 'none', border: 'none', cursor: 'pointer', padding: 0,
+      font: '500 12px ' + mono, letterSpacing: '0.02em',
+      color: st.activeSection === id ? acc : '#8A94A6', transition: 'color 0.15s ease'
+    });
+
+    const btnBase = {
+      display: 'inline-flex', alignItems: 'center', gap: 7, cursor: 'pointer', padding: '7px 12px',
+      borderRadius: 3, font: '500 12px ' + mono, letterSpacing: '0.03em', transition: 'all 0.15s ease'
+    };
+    const dayBtns = d.days.map(day => {
+      const active = st.day === day.id;
+      return {
+        key: day.id, label: day.label, city: day.city,
+        click: () => this.selectDay(day.id),
+        style: Object.assign({}, btnBase, active
+          ? { border: '1px solid ' + acc, color: '#EDEAE3', background: 'rgba(230,57,70,0.08)' }
+          : { border: '1px solid #232B3A', color: '#8A94A6', background: 'transparent' }),
+        dotStyle: { width: 8, height: 8, borderRadius: '50%', background: this.cityColor(day.city), display: 'inline-block' }
+      };
+    });
+    const allBtnStyle = Object.assign({}, btnBase, !st.day
+      ? { border: '1px solid ' + acc, color: '#EDEAE3', background: 'rgba(230,57,70,0.08)' }
+      : { border: '1px solid #232B3A', color: '#8A94A6', background: 'transparent' });
+
+    const dayObj = d.days.find(x => x.id === st.day) || null;
+    let daySummary, panelEntries = [], panelKicker = '', panelTitle = '', panelSummary = '';
+    if (dayObj) {
+      const info = this.dayInfo(dayObj);
+      daySummary = dayObj.label + ' · ' + info.pts + ' ' + this.plural(info.pts, ['точка', 'точки', 'точек']) +
+        ' · ~' + info.hours + ' ч на ногах' + (showCosts ? ' · транспорт ~' + this.yen(info.cost) : '');
+      panelKicker = dayObj.label + ' · ' + dayObj.city;
+      panelTitle = dayObj.title;
+      panelSummary = daySummary;
+      dayObj.points.forEach((p, i) => {
+        panelEntries.push({
+          isPoint: true, isLeg: false, key: 'p' + i, time: p.arr, name: p.name,
+          hasDur: p.dur && p.dur !== '—', dur: p.dur + ' на месте', desc: p.desc,
+          click: () => this.centerPoint(dayObj.id, i)
+        });
+        const leg = dayObj.legs[i];
+        if (leg) panelEntries.push({
+          isPoint: false, isLeg: true, key: 'l' + i, tag: leg.tag,
+          legText: leg.line + ' · ' + leg.time + (showCosts ? ' · ' + this.legCost(leg) : '')
+        });
+      });
+    } else {
+      daySummary = totalPts + ' ' + this.plural(totalPts, ['точка', 'точки', 'точек']) + ' · 10 дней · 4 города' +
+        (showCosts ? ' · транспорт всего ~' + this.yen(totalCost) : '');
+    }
+
+    const dayList = d.days.map(day => ({
+      key: day.id, label: day.label, city: day.city, title: day.title,
+      click: () => this.selectDay(day.id),
+      labStyle: { font: '600 11px ' + mono, color: this.cityColor(day.city) }
+    }));
+
+    const fallbackRows = [];
+    d.days.forEach(day => day.points.forEach(p => fallbackRows.push({ key: day.id + p.name, day: day.label, name: p.name, arr: p.arr })));
+
+    /* печатная версия */
+    const printSections = [['pre', '/ 01 До вылета'], ['arr', '/ 02 Сразу по прилёту']].map(pair => ({
+      key: pair[0], title: pair[1],
+      cats: this.secData(pair[0]).cats.map(cat => ({
+        key: cat.id, name: cat.name,
+        items: this.catItems(cat).map(it => ({
+          key: it.id,
+          text: (st.checked[it.id] ? '☑' : '☐') + ' ' + it.label + (it.dl ? ' — ' + it.dl : '')
+        }))
+      }))
+    }));
+    const printDays = d.days.map(day => {
+      const lines = [];
+      day.points.forEach((p, i) => {
+        lines.push({ key: 'p' + i, text: p.arr + ' · ' + p.name + (p.dur !== '—' ? ' · ' + p.dur : '') + ' — ' + p.desc });
+        const leg = day.legs[i];
+        if (leg) lines.push({ key: 'l' + i, text: '   → ' + leg.tag + ' ' + leg.line + ' · ' + leg.time + ' · ' + this.legCost(leg) });
+      });
+      return { key: day.id, title: day.label + ' · ' + day.city + ' — ' + day.title, lines };
+    });
+
+    return {
+      mapRef: this.mapRef,
+      sections,
+      preHdrLabel: preC.done + '/' + preC.total + ' до вылета',
+      arrHdrLabel: arrC.done + '/' + arrC.total + ' по прилёту',
+      ptsHdrLabel: totalPts + ' ' + this.plural(totalPts, ['точка', 'точки', 'точек']) + ' маршрута',
+      navPreStyle: navStyle('sec-pre'), navArrStyle: navStyle('sec-arr'), navMapStyle: navStyle('sec-map'),
+      goPre: () => this.scrollToId('sec-pre'),
+      goArr: () => this.scrollToId('sec-arr'),
+      goMap: () => this.scrollToId('sec-map'),
+      allClick: () => this.selectDay(null),
+      allBtnStyle, dayBtns, daySummary,
+      panelIsDay: !!dayObj, panelIsAll: !dayObj,
+      panelKicker, panelTitle, panelSummary, panelEntries,
+      panelKickerStyle: { font: '600 11px ' + mono, letterSpacing: '0.1em', textTransform: 'uppercase', color: dayObj ? this.cityColor(dayObj.city) : '#5A6474' },
+      dayList, fallbackRows,
+      tilesFailed: st.tilesFailed,
+      copyClick: () => this.copyMD(),
+      copyLabel: st.copied ? 'Скопировано ✓' : 'Скопировать (MD)',
+      dlClick: () => this.downloadMD(),
+      printClick: () => window.print(),
+      printSections, printDays
+    };
+  }
+}
+
+</script>
+</body>
+</html>
