@@ -1,0 +1,95 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #0B1016;
+  --color-bg-raised: #0F1520;
+  --color-bg-elevated: #121826;
+  --color-bg-active: #1B2230;
+  --color-border: #232B3A;
+  --color-border-strong: #39435A;
+  --color-divider: #151C28;
+  --color-text: #D9D6CF;
+  --color-text-bright: #EDEAE3;
+  --color-text-muted: #A7B0BF;
+  --color-text-dim: #8A94A6;
+  --color-text-faint: #5A6474;
+  --color-accent: #E63946;
+  --color-accent-tint: rgba(230, 57, 70, 0.08);
+
+  --font-sans: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+}
+
+@keyframes jk-fade {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.animate-jk-fade {
+  animation: jk-fade 0.25s ease;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: #fff;
+}
+
+.leaflet-container {
+  background: var(--color-bg);
+}
+
+.leaflet-popup-content-wrapper {
+  background: var(--color-bg-elevated);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+}
+
+.leaflet-popup-tip {
+  background: var(--color-bg-elevated);
+}
+
+.leaflet-popup-close-button {
+  color: var(--color-text-dim);
+}
+
+.leaflet-bar a {
+  background: var(--color-bg-elevated);
+  color: var(--color-text);
+  border-color: var(--color-border);
+}
+
+.leaflet-bar a:hover {
+  background: var(--color-bg-active);
+  color: #ffffff;
+}
+
+@media print {
+  #app {
+    display: none !important;
+  }
+  #printdoc {
+    display: block !important;
+  }
+  body {
+    background: #ffffff !important;
+    color: #111111 !important;
+  }
+}
