@@ -1,4 +1,7 @@
 @import "tailwindcss";
+/* Must precede the .leaflet-* overrides below: same specificity, so load order decides
+   whether Leaflet's light defaults or our dark theme wins. */
+@import "leaflet/dist/leaflet.css";
 
 @theme {
   --color-bg: #0B1016;

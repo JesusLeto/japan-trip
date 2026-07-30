@@ -1,6 +1,5 @@
 import { useEffect, useImperativeHandle, useRef, useState, type Ref } from 'react';
 import L from 'leaflet';
-import 'leaflet/dist/leaflet.css';
 import { resolveCityColor } from '../../utils/cityColor';
 import type { TripData, TripDay, TripPoint } from '../../types/trip';
 
