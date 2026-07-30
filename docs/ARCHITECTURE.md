@@ -46,21 +46,17 @@ interface AppContextValue {
 - **`src/components/checklist/`** — compound-набор `Checklist.Section/Category/Item/AddItemForm` (собран в `index.ts` как объект `Checklist`). `PreDepartureChecklist` и `ArrivalChecklist` — explicit variants, а не один компонент с boolean-пропом `numbered`: `ArrivalChecklist` передаёт номер шага как `children` в `Checklist.Item`, `PreDepartureChecklist` — нет.
   - `ChecklistSectionContext` (файл `ChecklistSectionContext.tsx`) — локальный контекст, скоуп — один `Checklist.Section` (несёт `mode`/`hideDone`); отдельно от глобального `AppContext`.
   - `Checklist.Category` использует `renderItem`-render-prop (не `children`) для передачи `item`/`index`/`canDelete` наружу — обоснованный случай render-props, так как эти данные известны только внутри цикла категории.
-- **`src/components/route/`** — `DayPanel.Overview`/`DayPanel.DayDetail` (`DayPanel.ts`) — explicit variants вместо одного `DayPanel` с внутренним переключением по `day`; какой рендерить, решает `RouteSection` на основе `state.day`.
-- **`RouteMap`** принимает `ref` как обычный проп (React 19, без `forwardRef`) с императивным хэндлом `{ flyToPoint(dayId, pointIndex) }`, которым `RouteSection` даёт `DayPanel.DayDetail` центрировать карту по клику на точку.
-- **`src/components/itinerary/`** — `ItinerarySection` (липкая day-nav + список) и `DayCard` (одна карточка дня). Альтернатива `RouteSection` для нарративных дней; какая из двух секций отрисуется, определяется наличием `blocks`/`points` в данных, а не пропом-переключателем.
+- **`src/components/route/`** — единственная секция маршрута (`RouteSection`): `DayStrip` (табы дней) → `DayCard` (описание выбранного дня) → `RouteMap` (его же маршрут), плюс `DayPanelDayDetail` сбоку от карты, когда у дня есть точки. Выбор дня живёт в глобальном `state.day`, поэтому табы, описание и карта всегда показывают один и тот же день без пропов-переключателей.
+- **`RouteMap`** принимает `ref` как обычный проп (React 19, без `forwardRef`) с императивным хэндлом `{ flyToPoint(dayId, pointIndex) }`, которым `RouteSection` даёт `DayPanelDayDetail` центрировать карту по клику на точку.
 - **`SectionHeading`** — общий заголовок секции (`/ 0N` + заголовок с accent-курсивом + подзаголовок), переиспользуется всеми секциями страницы.
-- **Секции сами решают, показываться ли**: `HotelsSection`/`BudgetSection`/`PracticalSection`/`SkipListSection` возвращают `null`, если соответствующего поля нет в `trip`; `RouteSection` — если ни у одного дня нет `points`. Родитель (`App.tsx`) просто перечисляет их все по порядку, без условной логики.
-
-### Липкие слои и якоря
-
-Хедер — `sticky top-0` (~49px). Day-nav внутри `ItinerarySection` — `sticky top-12` (48px), высота ~53px. Поэтому у карточек дня `scroll-mt-[112px]`: при переходе по якорю `#itin-dN` заголовок дня приземляется ниже обеих липких панелей. Меняете высоту хедера или day-nav — пересчитайте этот отступ.
+- **Секции сами решают, показываться ли**: `HotelsSection`/`BudgetSection`/`PracticalSection`/`SkipListSection` возвращают `null`, если соответствующего поля нет в `trip`. Родитель (`App.tsx`) просто перечисляет их все по порядку, без условной логики.
 
 ## Карта (RouteMap)
 
 - Leaflet-инстанс создаётся один раз в `useEffect` с пустым deps-массивом; хранится в `useRef`, не пересоздаётся при смене дня.
 - Второй `useEffect` (deps `[day]`) обновляет иконки маркеров, линии и зум/полёт камеры.
-- **Важный нюанс**: свежесозданный `L.Map` не имеет вида (center/zoom) до первого `setView`/`fitBounds` — `flyTo`/`flyToBounds` в этот момент бросают `"Set map center and zoom first"`. `isInitialRef` сбрасывается в `true` при каждом создании карты (в т.ч. при двойном вызове эффектов React StrictMode в dev) и гарантирует, что самый первый вызов внутри `[day]`-эффекта использует `fitBounds`/`fitBounds`, а не `flyTo*`.
+- **Важный нюанс**: свежесозданный `L.Map` не имеет вида (center/zoom) до первого `setView`/`fitBounds` — `flyTo`/`flyToBounds` в этот момент бросают `"Set map center and zoom first"`. `isInitialRef` сбрасывается в `true` при каждом создании карты (в т.ч. при двойном вызове эффектов React StrictMode в dev) и гарантирует, что самый первый вызов внутри `[day]`-эффекта использует `fitBounds`, а не `flyTo*`. Когда точек нет вообще, вид задаётся из `trip.mapView` — иначе карта осталась бы без вида и любой последующий `flyTo` упал бы.
+- Выбран день без координат (частый случай, пока точки не заполнены) — карта показывает общий вид поездки, а не пытается вписать пустые bounds.
 - Fallback при обрыве тайлов — счётчик подряд идущих `tileerror` в `useRef`, при >5 показывается оверлей-заглушка со списком точек (`tilesFailed` state).
 
 ## Экспорт

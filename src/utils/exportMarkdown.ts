@@ -25,7 +25,8 @@ function checklistMarkdown(section: ChecklistData, title: string, state: Persist
   return md;
 }
 
-function narrativeDayMarkdown(day: TripData['days'][number]): string {
+/** One day = its narrative plus, when coordinates exist, the mapped point-by-point route. */
+function dayMarkdown(day: TripData['days'][number]): string {
   let md = `\n### ${day.label} · ${day.city} — ${day.title}${day.base ? ` (${day.base})` : ''}\n`;
   if (day.keyTag) md += `_${day.keyTag}_\n\n`;
   if (day.blocks?.morning) md += `**Утро.** ${day.blocks.morning}\n\n`;
@@ -38,16 +39,16 @@ function narrativeDayMarkdown(day: TripData['days'][number]): string {
   if (day.foodNote) md += `**Еда:** ${day.foodNote}\n\n`;
   if (day.planBNote) md += `**План Б:** ${day.planBNote}\n\n`;
   if (day.skipNote) md += `**Пропустите:** ${day.skipNote}\n\n`;
-  return md;
-}
 
-function mapDayMarkdown(day: TripData['days'][number]): string {
-  let md = `\n### ${day.label} · ${day.city} — ${day.title}\n`;
-  day.points.forEach((point, i) => {
-    md += `- **${point.arr}** ${point.name}${point.dur !== '—' ? ` (${point.dur})` : ''} — ${point.desc}\n`;
-    const leg = day.legs[i];
-    if (leg) md += `    - → ${leg.tag} ${leg.line} · ${leg.time} · ${formatLegCost(leg)}\n`;
-  });
+  if (day.points.length > 0) {
+    md += 'Точки на карте:\n';
+    day.points.forEach((point, i) => {
+      md += `- **${point.arr}** ${point.name}${point.dur !== '—' ? ` (${point.dur})` : ''} — ${point.desc}\n`;
+      const leg = day.legs[i];
+      if (leg) md += `    - → ${leg.tag} ${leg.line} · ${leg.time} · ${formatLegCost(leg)}\n`;
+    });
+    md += '\n';
+  }
   return md;
 }
 
@@ -56,15 +57,9 @@ export function buildMarkdown(trip: TripData, state: PersistedState): string {
   md += checklistMarkdown(trip.pre, '/ 01 До вылета', state);
   md += checklistMarkdown(trip.arrival, '/ 02 Сразу по прилёту', state);
 
-  const hasNarrativeDays = trip.days.some((day) => day.blocks);
-  const hasMapPoints = trip.days.some((day) => day.points.length > 0);
-
-  if (hasNarrativeDays) {
-    md += '\n## / 03 День за днём\n';
-    md += trip.days.map(narrativeDayMarkdown).join('');
-  } else if (hasMapPoints) {
-    md += '\n## / 03 Маршрут\n';
-    md += trip.days.map(mapDayMarkdown).join('');
+  if (trip.days.length > 0) {
+    md += '\n## / 03 Маршрут день за днём\n';
+    md += trip.days.map(dayMarkdown).join('');
   }
 
   if (trip.hotels) {

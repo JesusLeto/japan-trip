@@ -10,8 +10,6 @@ export function PrintDocument() {
     { title: '/ 01 До вылета', section: trip.pre },
     { title: '/ 02 Сразу по прилёту', section: trip.arrival },
   ];
-  const hasNarrativeDays = trip.days.some((day) => day.blocks);
-  const hasMapPoints = trip.days.some((day) => day.points.length > 0);
 
   return (
     <div id="printdoc" className="hidden bg-white p-2 font-sans text-[#111111]">
@@ -37,9 +35,11 @@ export function PrintDocument() {
         </div>
       ))}
 
-      {hasNarrativeDays && (
+      {trip.days.length > 0 && (
         <>
-          <h2 className="mt-[18px] mb-1 border-b border-[#dddddd] pb-[3px] text-[15px]">/ 03 День за днём</h2>
+          <h2 className="mt-[18px] mb-1 border-b border-[#dddddd] pb-[3px] text-[15px]">
+            / 03 Маршрут день за днём
+          </h2>
           {trip.days.map((day) => (
             <div key={day.id} className="mt-2.5">
               <h3 className="mb-[3px] text-[12.5px] font-semibold">
@@ -82,19 +82,6 @@ export function PrintDocument() {
                   <b>Пропустите:</b> {renderRichText(day.skipNote)}
                 </div>
               )}
-            </div>
-          ))}
-        </>
-      )}
-
-      {!hasNarrativeDays && hasMapPoints && (
-        <>
-          <h2 className="mt-[18px] mb-1 border-b border-[#dddddd] pb-[3px] text-[15px]">/ 03 Маршрут по дням</h2>
-          {trip.days.map((day) => (
-            <div key={day.id}>
-              <h3 className="mt-2.5 mb-[3px] text-[12.5px]">
-                {day.label} · {day.city} — {day.title}
-              </h3>
               {day.points.map((point, i) => (
                 <div key={point.name}>
                   <div className="py-[1.5px] text-xs whitespace-pre-wrap">

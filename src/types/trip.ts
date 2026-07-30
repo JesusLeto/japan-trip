@@ -123,9 +123,16 @@ export interface SkipListSectionData {
   items: SkipItem[];
 }
 
+/** Initial map view, used until points with coordinates exist to fit bounds against. */
+export interface TripMapView {
+  center: [number, number];
+  zoom: number;
+}
+
 export interface TripData {
   id: string;
   meta: TripMeta;
+  mapView: TripMapView;
   cities: Record<string, string>;
   pre: ChecklistData;
   arrival: ChecklistData;

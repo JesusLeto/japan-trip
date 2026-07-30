@@ -23,6 +23,9 @@ export const japanTrip: TripData = {
     footerNote: 'Осака → Киото → Коясан → Хаконэ → Токио',
   },
 
+  // Covers Осака → Токио until per-point coordinates are filled in.
+  mapView: { center: [34.9, 136.4], zoom: 6 },
+
   cities: {
     Осака: '#B57EDC',
     Киото: '#E0A458',

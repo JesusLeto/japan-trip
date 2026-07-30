@@ -40,14 +40,12 @@ interface DayCardProps {
   cityColor: string;
 }
 
+/** The selected day told in words: morning/day/evening, transit, food and plan B. */
 export function DayCard({ day, dayNumber, cityColor }: DayCardProps) {
   const blocks = day.blocks;
 
   return (
-    <section
-      id={`itin-${day.id}`}
-      className="grid scroll-mt-[112px] grid-cols-1 gap-4 border-b border-divider py-8 last:border-b-0 md:grid-cols-[110px_minmax(0,1fr)] md:gap-6"
-    >
+    <div className="grid grid-cols-1 gap-4 md:grid-cols-[110px_minmax(0,1fr)] md:gap-6">
       <div className="flex items-baseline gap-3 md:block">
         <div className="font-mono text-3xl font-bold" style={{ color: cityColor }}>
           {dayNumber}
@@ -103,6 +101,6 @@ export function DayCard({ day, dayNumber, cityColor }: DayCardProps) {
           </p>
         )}
       </div>
-    </section>
+    </div>
   );
 }

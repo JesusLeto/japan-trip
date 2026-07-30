@@ -1,6 +1,7 @@
 import { useEffect, useImperativeHandle, useRef, useState, type Ref } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import { resolveCityColor } from '../../utils/cityColor';
 import type { TripData, TripDay, TripPoint } from '../../types/trip';
 
 const TILE_URL = 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png';
@@ -18,7 +19,7 @@ interface MarkerRecord {
 }
 
 function cityColor(trip: TripData, city: string): string {
-  return trip.cities[city] ?? '#8A94A6';
+  return resolveCityColor(trip.cities, city);
 }
 
 function makeIcon(color: string, num: number | null, dim: boolean) {
@@ -118,29 +119,36 @@ export function RouteMap({ trip, day, ref }: RouteMapProps) {
       rec.marker.setZIndexOffset(isSelected ? 1000 : 0);
     });
 
-    if (day) {
-      const coords = day.points.map((p) => p.coords);
-      L.polyline(coords, { color: cityColor(trip, day.city), weight: 2, opacity: 0.9 }).addTo(lineGroup);
-      const bounds = L.latLngBounds(coords).pad(0.3);
+    function applyView(bounds: L.LatLngBounds) {
+      if (!map) return;
       if (isInitialRef.current) map.fitBounds(bounds);
       else map.flyToBounds(bounds, { duration: 0.8 });
-    } else {
-      const all = trip.days.flatMap((d) => d.points.map((p) => ({ coords: p.coords, city: p.city ?? d.city })));
-      for (let i = 1; i < all.length; i++) {
-        if (all[i].city !== all[i - 1].city) {
-          L.polyline([all[i - 1].coords, all[i].coords], {
-            color: '#7B8598',
-            weight: 1.5,
-            dashArray: '4 7',
-            opacity: 0.55,
-          }).addTo(lineGroup);
+    }
+
+    const dayCoords = day?.points.map((p) => p.coords) ?? [];
+    const all = trip.days.flatMap((d) => d.points.map((p) => ({ coords: p.coords, city: p.city ?? d.city })));
+
+    if (dayCoords.length > 0) {
+      L.polyline(dayCoords, { color: cityColor(trip, day!.city), weight: 2, opacity: 0.9 }).addTo(lineGroup);
+      applyView(L.latLngBounds(dayCoords).pad(0.3));
+    } else if (all.length > 0) {
+      // Overview, or a selected day whose points have no coordinates yet: show the whole trip.
+      if (!day) {
+        for (let i = 1; i < all.length; i++) {
+          if (all[i].city !== all[i - 1].city) {
+            L.polyline([all[i - 1].coords, all[i].coords], {
+              color: '#7B8598',
+              weight: 1.5,
+              dashArray: '4 7',
+              opacity: 0.55,
+            }).addTo(lineGroup);
+          }
         }
       }
-      if (all.length) {
-        const bounds = L.latLngBounds(all.map((x) => x.coords)).pad(0.08);
-        if (isInitialRef.current) map.fitBounds(bounds);
-        else map.flyToBounds(bounds, { duration: 0.8 });
-      }
+      applyView(L.latLngBounds(all.map((x) => x.coords)).pad(0.08));
+    } else if (isInitialRef.current) {
+      // No coordinates anywhere yet — Leaflet still needs an explicit view before any flyTo works.
+      map.setView(trip.mapView.center, trip.mapView.zoom);
     }
     isInitialRef.current = false;
     // trip is static for the app's lifetime; only `day` should retrigger this.

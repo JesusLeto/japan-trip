@@ -50,12 +50,20 @@ export function Header() {
   const preCounts = getSectionCounts(trip.pre, state);
   const arrivalCounts = getSectionCounts(trip.arrival, state);
   const pointCount = trip.days.reduce((sum, day) => sum + day.points.length, 0);
-  const hasMapPoints = pointCount > 0;
+  const hasNarrativeDays = trip.days.some((day) => day.blocks);
+
+  // Once points have coordinates the route counter is the more precise number; until then, count days.
+  const routeNav =
+    pointCount > 0
+      ? { id: 'sec-map', label: `${pointCount} ${ruPlural(pointCount, ['точка', 'точки', 'точек'])} маршрута` }
+      : hasNarrativeDays
+        ? { id: 'sec-map', label: `${trip.days.length} ${ruPlural(trip.days.length, ['день', 'дня', 'дней'])} маршрута` }
+        : null;
 
   const sections: SectionRef[] = [
     { id: 'sec-pre', key: 'pre' },
     { id: 'sec-arr', key: 'arrival' },
-    ...(hasMapPoints ? [{ id: 'sec-map', key: 'map' as const }] : []),
+    ...(routeNav ? [{ id: routeNav.id, key: 'map' as const }] : []),
   ];
   const active = useActiveSection(sections);
 
@@ -73,9 +81,9 @@ export function Header() {
           <button type="button" onClick={() => scrollToSection('sec-arr')} className={counterClass(active === 'arrival')}>
             {arrivalCounts.checked}/{arrivalCounts.total} по прилёту
           </button>
-          {hasMapPoints && (
-            <button type="button" onClick={() => scrollToSection('sec-map')} className={counterClass(active === 'map')}>
-              {pointCount} {ruPlural(pointCount, ['точка', 'точки', 'точек'])} маршрута
+          {routeNav && (
+            <button type="button" onClick={() => scrollToSection(routeNav.id)} className={counterClass(active === 'map')}>
+              {routeNav.label}
             </button>
           )}
         </nav>
