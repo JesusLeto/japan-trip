@@ -28,10 +28,10 @@ export function DayPanelDayDetail({ day, onSelectPoint }: DayPanelDayDetailProps
             onClick={() => onSelectPoint(index)}
             className="grid w-full grid-cols-[48px_minmax(0,1fr)] gap-2.5 rounded-[2px] border-t border-divider bg-transparent px-1 py-[11px] text-left font-sans hover:bg-bg-raised"
           >
-            <span className="pt-px font-mono text-xs font-semibold text-accent">{point.arr}</span>
+            <span className="pt-px font-mono text-xs font-semibold text-accent">{point.arr ?? index + 1}</span>
             <span className="block min-w-0">
               <span className="block text-sm leading-[1.35] font-semibold text-text-bright">{point.name}</span>
-              {point.dur !== '—' && (
+              {point.dur && point.dur !== '—' && (
                 <span className="mt-[3px] block font-mono text-[11px] font-medium text-text-faint">
                   {point.dur} на месте
                 </span>

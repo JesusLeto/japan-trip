@@ -85,8 +85,9 @@ export function PrintDocument() {
               {day.points.map((point, i) => (
                 <div key={point.name}>
                   <div className="py-[1.5px] text-xs whitespace-pre-wrap">
-                    {point.arr} · {point.name}
-                    {point.dur !== '—' ? ` · ${point.dur}` : ''} — {point.desc}
+                    {point.arr ? `${point.arr} · ` : ''}
+                    {point.name}
+                    {point.dur && point.dur !== '—' ? ` · ${point.dur}` : ''} — {point.desc}
                   </div>
                   {day.legs[i] && (
                     <div className="py-[1.5px] text-xs whitespace-pre-wrap">

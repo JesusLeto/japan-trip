@@ -43,7 +43,9 @@ function dayMarkdown(day: TripData['days'][number]): string {
   if (day.points.length > 0) {
     md += 'Точки на карте:\n';
     day.points.forEach((point, i) => {
-      md += `- **${point.arr}** ${point.name}${point.dur !== '—' ? ` (${point.dur})` : ''} — ${point.desc}\n`;
+      const time = point.arr ? `**${point.arr}** ` : '';
+      const spent = point.dur && point.dur !== '—' ? ` (${point.dur})` : '';
+      md += `- ${time}${point.name}${spent} — ${point.desc}\n`;
       const leg = day.legs[i];
       if (leg) md += `    - → ${leg.tag} ${leg.line} · ${leg.time} · ${formatLegCost(leg)}\n`;
     });

@@ -1,9 +1,7 @@
 import { useRef } from 'react';
 import { useApp } from '../../state/AppContext';
 import { resolveCityColor } from '../../utils/cityColor';
-import { computeTotalCost, formatDaySummary } from '../../utils/dayInfo';
-import { formatYen } from '../../utils/money';
-import { ruPlural } from '../../utils/pluralize';
+import { formatDaySummary, formatTripSummary } from '../../utils/dayInfo';
 import { SectionHeading } from '../SectionHeading';
 import { DayCard } from './DayCard';
 import { DayStrip } from './DayStrip';
@@ -18,15 +16,7 @@ export function RouteSection() {
   const totalPoints = trip.days.reduce((sum, d) => sum + d.points.length, 0);
   const hasDayTimeline = day !== null && day.points.length > 0;
 
-  const summary = (() => {
-    if (day) {
-      return day.points.length > 0 ? formatDaySummary(day) : `${day.label} · ${day.city} · ${day.title}`;
-    }
-    if (totalPoints === 0) {
-      return `${trip.days.length} ${ruPlural(trip.days.length, ['день', 'дня', 'дней'])} · выберите день, чтобы прочитать план и увидеть его на карте`;
-    }
-    return `${totalPoints} ${ruPlural(totalPoints, ['точка', 'точки', 'точек'])} · ${trip.meta.routeOverviewSummary ?? ''} · транспорт всего ~${formatYen(computeTotalCost(trip.days))}`;
-  })();
+  const summary = day ? formatDaySummary(day) : formatTripSummary(trip);
 
   return (
     <section id="sec-map" className="border-t border-bg-active">

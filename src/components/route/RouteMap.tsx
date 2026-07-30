@@ -83,12 +83,13 @@ export function RouteMap({ trip, day, ref }: RouteMapProps) {
       d.points.forEach((point, index) => {
         const color = cityColor(trip, point.city ?? d.city);
         const marker = L.marker(point.coords, { icon: makeIcon(color, null, false) }).addTo(map);
+        const metaParts = [d.label];
+        if (point.arr) metaParts.push(`прибытие ${point.arr}`);
+        if (point.dur && point.dur !== '—') metaParts.push(point.dur);
         marker.bindPopup(
           `<div style="min-width:190px;max-width:240px">` +
             `<div style="font:600 14px system-ui;color:#EDEAE3">${point.name}</div>` +
-            `<div style="font:11px ${MONO_FONT};color:#8A94A6;margin:5px 0">${d.label} · прибытие ${point.arr}${
-              point.dur !== '—' ? ' · ' + point.dur : ''
-            }</div>` +
+            `<div style="font:11px ${MONO_FONT};color:#8A94A6;margin:5px 0">${metaParts.join(' · ')}</div>` +
             `<div style="font:12.5px/1.55 system-ui;color:#A7B0BF">${point.desc}</div></div>`,
         );
         records.push({ marker, day: d, point, index });

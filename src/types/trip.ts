@@ -18,10 +18,13 @@ export interface ChecklistData {
 export interface TripPoint {
   name: string;
   coords: [number, number];
-  arr: string;
-  dur: string;
-  durMin: number;
   desc: string;
+  /** Arrival time, e.g. "14:20". Omitted while the exact dates are still floating. */
+  arr?: string;
+  /** Human-readable time spent on the spot, e.g. "1,5 ч". */
+  dur?: string;
+  /** Same as `dur`, in minutes — feeds the day's "часов на ногах" estimate. */
+  durMin?: number;
   /** Set only when this point is not in the day's "home" city. */
   city?: string;
 }
