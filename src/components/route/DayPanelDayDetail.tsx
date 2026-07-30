@@ -1,7 +1,6 @@
 import { useApp } from '../../state/AppContext';
-import { computeDayInfo } from '../../utils/dayInfo';
-import { formatLegCost, formatYen } from '../../utils/money';
-import { ruPlural } from '../../utils/pluralize';
+import { formatDaySummary } from '../../utils/dayInfo';
+import { formatLegCost } from '../../utils/money';
 import type { TripDay } from '../../types/trip';
 
 interface DayPanelDayDetailProps {
@@ -11,8 +10,7 @@ interface DayPanelDayDetailProps {
 
 export function DayPanelDayDetail({ day, onSelectPoint }: DayPanelDayDetailProps) {
   const { trip } = useApp();
-  const info = computeDayInfo(day);
-  const summary = `${day.label} · ${info.points} ${ruPlural(info.points, ['точка', 'точки', 'точек'])} · ~${info.hours} ч на ногах · транспорт ~${formatYen(info.cost)}`;
+  const summary = formatDaySummary(day);
   const color = trip.cities[day.city] ?? '#8A94A6';
 
   return (
@@ -24,7 +22,7 @@ export function DayPanelDayDetail({ day, onSelectPoint }: DayPanelDayDetailProps
       <div className="mb-3 font-mono text-[11px] font-medium text-text-faint">{summary}</div>
 
       {day.points.map((point, index) => (
-        <div key={point.name}>
+        <div key={index}>
           <button
             type="button"
             onClick={() => onSelectPoint(index)}

@@ -6,6 +6,8 @@ import type { ChecklistCategory as ChecklistCategoryData, ChecklistItemData } fr
 interface CategoryItem {
   item: ChecklistItemData;
   canDelete: boolean;
+  /** Stable position among this category's items, independent of hideDone filtering. */
+  index: number;
 }
 
 interface ChecklistCategoryProps {
@@ -21,9 +23,13 @@ export function ChecklistCategory({ cat, renderItem, children }: ChecklistCatego
 
   const customItems = state.custom[cat.id] ?? [];
   const allItems: CategoryItem[] = [
-    ...cat.items.map((item): CategoryItem => ({ item, canDelete: false })),
+    ...cat.items.map((item, index): CategoryItem => ({ item, canDelete: false, index })),
     ...customItems.map(
-      (custom): CategoryItem => ({ item: { ...custom, dl: '', desc: '' }, canDelete: true }),
+      (custom, i): CategoryItem => ({
+        item: { ...custom, dl: '', desc: '' },
+        canDelete: true,
+        index: cat.items.length + i,
+      }),
     ),
   ];
   const visibleItems = allItems.filter(({ item }) => !(hideDone && state.checked[item.id]));
@@ -48,7 +54,7 @@ export function ChecklistCategory({ cat, renderItem, children }: ChecklistCatego
         />
       </div>
       <div key={mode}>
-        {visibleItems.map(({ item, canDelete }, index) => renderItem(item, index, canDelete))}
+        {visibleItems.map(({ item, canDelete, index }) => renderItem(item, index, canDelete))}
       </div>
       {children}
     </div>

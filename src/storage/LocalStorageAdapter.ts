@@ -1,5 +1,5 @@
 import type { StorageAdapter } from './StorageAdapter';
-import type { PersistedState } from '../types/state';
+import { normalizePersistedState, type PersistedState } from '../types/state';
 
 export class LocalStorageAdapter implements StorageAdapter {
   private readonly key: string;
@@ -11,7 +11,7 @@ export class LocalStorageAdapter implements StorageAdapter {
   async load(): Promise<PersistedState | null> {
     try {
       const raw = window.localStorage.getItem(this.key);
-      return raw ? (JSON.parse(raw) as PersistedState) : null;
+      return raw ? normalizePersistedState(JSON.parse(raw)) : null;
     } catch {
       return null;
     }

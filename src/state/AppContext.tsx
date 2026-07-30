@@ -1,4 +1,4 @@
-import { createContext, use, useEffect, useReducer, useState, type ReactNode } from 'react';
+import { createContext, use, useEffect, useMemo, useReducer, useState, type ReactNode } from 'react';
 import type { ChecklistMode, ChecklistSectionId, PersistedState } from '../types/state';
 import type { TripData } from '../types/trip';
 import type { StorageAdapter } from '../storage/StorageAdapter';
@@ -21,6 +21,11 @@ export interface AppContextValue {
 
 const AppContext = createContext<AppContextValue | null>(null);
 
+function generateId(): string {
+  if (typeof crypto !== 'undefined' && crypto.randomUUID) return crypto.randomUUID();
+  return `u${Date.now()}${Math.floor(Math.random() * 1000)}`;
+}
+
 // eslint-disable-next-line react-refresh/only-export-components -- context + hook are one cohesive unit
 export function useApp(): AppContextValue {
   const value = use(AppContext);
@@ -39,6 +44,9 @@ export function AppProvider({ adapter, trip, children }: AppProviderProps) {
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
+    // Any action dispatched before this resolves is overwritten by HYDRATE below.
+    // Harmless with the near-instant LocalStorageAdapter; a network-backed adapter
+    // (e.g. Supabase) would need to queue or ignore actions until hydrated.
     let cancelled = false;
     adapter.load().then((loaded) => {
       if (!cancelled && loaded) dispatch({ type: 'HYDRATE', state: loaded });
@@ -56,15 +64,20 @@ export function AppProvider({ adapter, trip, children }: AppProviderProps) {
     adapter.save(state);
   }, [adapter, hydrated, state]);
 
-  const actions: AppActions = {
-    toggleItem: (itemId) => dispatch({ type: 'TOGGLE_ITEM', itemId }),
-    addCustomItem: (catId, label) =>
-      dispatch({ type: 'ADD_CUSTOM_ITEM', catId, itemId: crypto.randomUUID(), label }),
-    deleteCustomItem: (catId, itemId) => dispatch({ type: 'DELETE_CUSTOM_ITEM', catId, itemId }),
-    setMode: (section, mode) => dispatch({ type: 'SET_MODE', section, mode }),
-    setHideDone: (section, value) => dispatch({ type: 'SET_HIDE_DONE', section, value }),
-    selectDay: (dayId) => dispatch({ type: 'SELECT_DAY', dayId }),
-  };
+  const actions = useMemo<AppActions>(
+    () => ({
+      toggleItem: (itemId) => dispatch({ type: 'TOGGLE_ITEM', itemId }),
+      addCustomItem: (catId, label) =>
+        dispatch({ type: 'ADD_CUSTOM_ITEM', catId, itemId: generateId(), label }),
+      deleteCustomItem: (catId, itemId) => dispatch({ type: 'DELETE_CUSTOM_ITEM', catId, itemId }),
+      setMode: (section, mode) => dispatch({ type: 'SET_MODE', section, mode }),
+      setHideDone: (section, value) => dispatch({ type: 'SET_HIDE_DONE', section, value }),
+      selectDay: (dayId) => dispatch({ type: 'SELECT_DAY', dayId }),
+    }),
+    [],
+  );
 
-  return <AppContext value={{ trip, state, actions }}>{children}</AppContext>;
+  const value = useMemo<AppContextValue>(() => ({ trip, state, actions }), [trip, state, actions]);
+
+  return <AppContext value={value}>{children}</AppContext>;
 }

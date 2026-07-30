@@ -1,12 +1,6 @@
-import type { ChecklistMode, ChecklistSectionId, PersistedState } from '../types/state';
+import { defaultPersistedState, type ChecklistMode, type ChecklistSectionId, type PersistedState } from '../types/state';
 
-export const initialPersistedState: PersistedState = {
-  checked: {},
-  custom: {},
-  modes: { pre: 'brief', arrival: 'brief' },
-  hideDone: { pre: false, arrival: false },
-  day: null,
-};
+export const initialPersistedState = defaultPersistedState;
 
 export type Action =
   | { type: 'HYDRATE'; state: PersistedState }

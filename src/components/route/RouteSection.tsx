@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { useApp } from '../../state/AppContext';
-import { computeDayInfo, computeTotalCost } from '../../utils/dayInfo';
+import { computeTotalCost, formatDaySummary } from '../../utils/dayInfo';
 import { formatYen } from '../../utils/money';
 import { ruPlural } from '../../utils/pluralize';
 import { DayStrip } from './DayStrip';
@@ -13,10 +13,7 @@ export function RouteSection() {
   const day = trip.days.find((d) => d.id === state.day) ?? null;
 
   const summary = day
-    ? (() => {
-        const info = computeDayInfo(day);
-        return `${day.label} · ${info.points} ${ruPlural(info.points, ['точка', 'точки', 'точек'])} · ~${info.hours} ч на ногах · транспорт ~${formatYen(info.cost)}`;
-      })()
+    ? formatDaySummary(day)
     : (() => {
         const totalPts = trip.days.reduce((sum, d) => sum + d.points.length, 0);
         const totalCost = computeTotalCost(trip.days);
