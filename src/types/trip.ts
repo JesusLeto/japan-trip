@@ -35,6 +35,12 @@ export interface TripLeg {
   time: string;
   cost: number;
   note?: string;
+  /**
+   * Real geometry of this leg — the shape the train/bus/walk actually follows.
+   * Drawn from the previous point through these coordinates to the next one, so
+   * it need not repeat the endpoints. Without it the leg is a straight line.
+   */
+  path?: [number, number][];
 }
 
 /** Morning/day/evening narrative for a day with no map points. Text may use markdown-lite bold and italic markup. */

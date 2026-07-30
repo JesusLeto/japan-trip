@@ -129,8 +129,16 @@ export function RouteMap({ trip, day, ref }: RouteMapProps) {
     const all = trip.days.flatMap((d) => d.points.map((p) => ({ coords: p.coords, city: p.city ?? d.city })));
 
     if (dayCoords.length > 0) {
-      L.polyline(dayCoords, { color: cityColor(trip, day!.city), weight: 2, opacity: 0.9 }).addTo(lineGroup);
-      applyView(L.latLngBounds(dayCoords).pad(0.3));
+      const color = cityColor(trip, day!.city);
+      // One polyline per leg: a leg with `path` follows the real route, the rest stay straight.
+      const drawn: [number, number][] = [...dayCoords];
+      for (let i = 0; i < dayCoords.length - 1; i++) {
+        const path = day!.legs[i]?.path ?? [];
+        const segment: [number, number][] = [dayCoords[i], ...path, dayCoords[i + 1]];
+        drawn.push(...path);
+        L.polyline(segment, { color, weight: 2, opacity: 0.9 }).addTo(lineGroup);
+      }
+      applyView(L.latLngBounds(drawn).pad(0.3));
     } else if (all.length > 0) {
       // Overview, or a selected day whose points have no coordinates yet: show the whole trip.
       if (!day) {
