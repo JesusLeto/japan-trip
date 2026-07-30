@@ -48,6 +48,13 @@ interface AppContextValue {
   - `Checklist.Category` использует `renderItem`-render-prop (не `children`) для передачи `item`/`index`/`canDelete` наружу — обоснованный случай render-props, так как эти данные известны только внутри цикла категории.
 - **`src/components/route/`** — `DayPanel.Overview`/`DayPanel.DayDetail` (`DayPanel.ts`) — explicit variants вместо одного `DayPanel` с внутренним переключением по `day`; какой рендерить, решает `RouteSection` на основе `state.day`.
 - **`RouteMap`** принимает `ref` как обычный проп (React 19, без `forwardRef`) с императивным хэндлом `{ flyToPoint(dayId, pointIndex) }`, которым `RouteSection` даёт `DayPanel.DayDetail` центрировать карту по клику на точку.
+- **`src/components/itinerary/`** — `ItinerarySection` (липкая day-nav + список) и `DayCard` (одна карточка дня). Альтернатива `RouteSection` для нарративных дней; какая из двух секций отрисуется, определяется наличием `blocks`/`points` в данных, а не пропом-переключателем.
+- **`SectionHeading`** — общий заголовок секции (`/ 0N` + заголовок с accent-курсивом + подзаголовок), переиспользуется всеми секциями страницы.
+- **Секции сами решают, показываться ли**: `HotelsSection`/`BudgetSection`/`PracticalSection`/`SkipListSection` возвращают `null`, если соответствующего поля нет в `trip`; `RouteSection` — если ни у одного дня нет `points`. Родитель (`App.tsx`) просто перечисляет их все по порядку, без условной логики.
+
+### Липкие слои и якоря
+
+Хедер — `sticky top-0` (~49px). Day-nav внутри `ItinerarySection` — `sticky top-12` (48px), высота ~53px. Поэтому у карточек дня `scroll-mt-[112px]`: при переходе по якорю `#itin-dN` заголовок дня приземляется ниже обеих липких панелей. Меняете высоту хедера или day-nav — пересчитайте этот отступ.
 
 ## Карта (RouteMap)
 
@@ -58,4 +65,6 @@ interface AppContextValue {
 
 ## Экспорт
 
-`src/utils/exportMarkdown.ts` — чистая функция `buildMarkdown(trip, state)`, не зависит от React; используется и в `ExportSection` (copy/download), и переиспользует свою `checklistItems()`-хелпер в `PrintDocument` для консистентности данных между MD-экспортом и печатной версией.
+`src/utils/exportMarkdown.ts` — чистая функция `buildMarkdown(trip, state)`, не зависит от React; используется и в `ExportSection` (copy/download), и переиспользует свою `checklistItems()`-хелпер в `PrintDocument` для консистентности данных между MD-экспортом и печатной версией. Оба выбирают формат дня (нарративный/картовый) по тем же признакам, что и UI, и добавляют разделы отелей/бюджета/практики/skip-листа, если они есть в `trip`.
+
+`src/utils/richText.tsx` — парсер markdown-lite (`**жирный**`, `*курсив*`) в React-узлы для нарративных текстов дня. Данные хранят разметку как обычный текст, а не HTML, — так они безопасны для MD-экспорта и не требуют `dangerouslySetInnerHTML`.

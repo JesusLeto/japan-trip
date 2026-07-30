@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import { useApp } from '../../state/AppContext';
+import { SectionHeading } from '../SectionHeading';
 import { ChecklistSectionContext } from './ChecklistSectionContext';
 import type { ChecklistSectionId } from '../../types/state';
 
@@ -48,11 +49,7 @@ export function ChecklistSection({
     <section id={anchor} className="border-t border-bg-active">
       <div className="mx-auto max-w-[1160px] px-6 pt-[72px] pb-[80px] max-[900px]:px-5">
         <div className="max-w-[720px]">
-          <div className="font-mono text-xs font-medium tracking-[0.12em] text-text-faint">{num}</div>
-          <h2 className="mt-3.5 mb-2.5 text-[34px] leading-[1.15] font-bold tracking-[-0.01em] text-text-bright">
-            {titlePrefix} <em className="text-accent">{titleAccent}</em>
-          </h2>
-          <p className="max-w-[560px] text-[15px] leading-[1.6] text-text-muted">{subtitle}</p>
+          <SectionHeading num={num} titlePrefix={titlePrefix} titleAccent={titleAccent} subtitle={subtitle} />
 
           <div className="mt-[30px] mb-1 flex flex-wrap items-center gap-5">
             <div className="flex overflow-hidden rounded-[3px] border border-border">

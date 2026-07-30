@@ -1,6 +1,6 @@
 # Travel Planner
 
-Личный веб-планировщик путешествий. MVP реализует одну поездку — Японию (`JAPAN KIT`): чеклисты подготовки и подробный маршрут на интерактивной карте. Дизайн-референс и полная UX-спецификация — в [design_handoff_japan_kit/README.md](design_handoff_japan_kit/README.md).
+Личный веб-планировщик путешествий. MVP реализует одну поездку — Японию (`JAPAN KIT`, Осака → Токио, 14 дней): чеклисты подготовки, маршрут день за днём с планами Б, отели, бюджет и практическая справка. Дизайн-референс (визуальный язык, чеклисты, карта) — в [design_handoff_japan_kit/README.md](design_handoff_japan_kit/README.md).
 
 ## Стек
 
@@ -27,9 +27,13 @@ src/
   data/         — data/trips/<trip>.ts (данные поездки) + data/index.ts (activeTrip)
   storage/      — StorageAdapter (интерфейс) + LocalStorageAdapter
   state/        — AppContext, AppProvider, reducer
-  components/   — Header, Hero, checklist/ (compound), route/ (карта, панель дня), ExportSection, Footer
-  utils/        — pluralize, checklist counts, money/day-info formatting, MD-экспорт
+  components/   — Header, Hero, checklist/ (compound), itinerary/ (день за днём),
+                  route/ (карта, панель дня), Hotels/Budget/Practical/SkipList-Section,
+                  ExportSection, Footer
+  utils/        — pluralize, checklist counts, money/day-info formatting, richText, MD-экспорт
 ```
+
+Секции страницы: `/01` До вылета · `/02` По прилёту · `/03` День за днём (или Маршрут на карте) · `/04` Где спать · `/05` Бюджет · `/06` Практика · `/07` Куда не ходить · `/08` Экспорт.
 
 Подробности архитектуры — [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md). Модель данных и как добавить новую поездку — [docs/DATA_MODEL.md](docs/DATA_MODEL.md). Дизайн-спека — [docs/superpowers/specs/2026-07-13-japan-kit-planner-design.md](docs/superpowers/specs/2026-07-13-japan-kit-planner-design.md).
 
@@ -38,4 +42,5 @@ src/
 - **Абстрактные имена, не `JapanKit*`**: проект потенциально хранит несколько поездок, поэтому типы и модули называются `Trip*`, а не `Japan*`. Конкретная поездка — только данные в `data/trips/`.
 - **Composition patterns**: React-логика следует `vercel-composition-patterns` — compound-компоненты вместо boolean-пропов, explicit variants вместо режимов внутри одного компонента, `children`/render-props вместо `renderX`-пропов. См. `Checklist.*` и `DayPanel.*` как примеры.
 - **Трип-специфичный контент — из данных**: строки о конкретной поездке (города, даты, маршрут — `kicker`, `routeSummary`, `heroLabel/Title/Subtitle`, `footerNote`, `routeOverviewSummary`) рендерятся из `trip.meta`, не хардкодятся в `Header`/`Hero`/`Footer`. Фичевый UI-копирайт, одинаковый для любой поездки (заголовки чеклистов «До вылета»/«Сразу по прилёту», подписи счётчиков хедера, дисклеймер футера «личный планировщик· всё сохраняется локально») — обычные строки в компонентах, это не часть `TripData`.
+- **Два формата дня**: `TripDay` бывает нарративным (`blocks` — Утро/День/Вечер, без координат) или картовым (`points`+`legs`). Секции сами скрываются, если данных нет: нет `points` ни у одного дня — нет карты и счётчика точек в хедере; нет `blocks` — нет секции «День за днём». Подробности — [docs/DATA_MODEL.md](docs/DATA_MODEL.md).
 - Автотестов нет (осознанное решение для MVP) — проверка через дев-сервер в браузере.

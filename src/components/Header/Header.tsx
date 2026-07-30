@@ -3,13 +3,12 @@ import { useApp } from '../../state/AppContext';
 import { getSectionCounts } from '../../utils/checklist';
 import { ruPlural } from '../../utils/pluralize';
 
-const SECTIONS = [
-  { id: 'sec-pre', key: 'pre' },
-  { id: 'sec-arr', key: 'arrival' },
-  { id: 'sec-map', key: 'map' },
-] as const;
+type SectionKey = 'pre' | 'arrival' | 'map';
 
-type SectionKey = (typeof SECTIONS)[number]['key'];
+interface SectionRef {
+  id: string;
+  key: SectionKey;
+}
 
 function scrollToSection(id: string) {
   const el = document.getElementById(id);
@@ -18,13 +17,13 @@ function scrollToSection(id: string) {
   window.scrollTo({ top, behavior: 'smooth' });
 }
 
-function useActiveSection(): SectionKey | null {
+function useActiveSection(sections: SectionRef[]): SectionKey | null {
   const [active, setActive] = useState<SectionKey | null>(null);
 
   useEffect(() => {
     function onScroll() {
       let current: SectionKey | null = null;
-      for (const section of SECTIONS) {
+      for (const section of sections) {
         const el = document.getElementById(section.id);
         if (el && el.getBoundingClientRect().top < 170) current = section.key;
       }
@@ -33,7 +32,8 @@ function useActiveSection(): SectionKey | null {
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
     return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sections.map((s) => s.id).join(',')]);
 
   return active;
 }
@@ -46,11 +46,18 @@ function counterClass(isActive: boolean) {
 
 export function Header() {
   const { trip, state } = useApp();
-  const active = useActiveSection();
 
   const preCounts = getSectionCounts(trip.pre, state);
   const arrivalCounts = getSectionCounts(trip.arrival, state);
   const pointCount = trip.days.reduce((sum, day) => sum + day.points.length, 0);
+  const hasMapPoints = pointCount > 0;
+
+  const sections: SectionRef[] = [
+    { id: 'sec-pre', key: 'pre' },
+    { id: 'sec-arr', key: 'arrival' },
+    ...(hasMapPoints ? [{ id: 'sec-map', key: 'map' as const }] : []),
+  ];
+  const active = useActiveSection(sections);
 
   return (
     <header className="sticky top-0 z-[1100] border-b border-bg-active bg-bg/92 backdrop-blur-[8px]">
@@ -66,9 +73,11 @@ export function Header() {
           <button type="button" onClick={() => scrollToSection('sec-arr')} className={counterClass(active === 'arrival')}>
             {arrivalCounts.checked}/{arrivalCounts.total} по прилёту
           </button>
-          <button type="button" onClick={() => scrollToSection('sec-map')} className={counterClass(active === 'map')}>
-            {pointCount} {ruPlural(pointCount, ['точка', 'точки', 'точек'])} маршрута
-          </button>
+          {hasMapPoints && (
+            <button type="button" onClick={() => scrollToSection('sec-map')} className={counterClass(active === 'map')}>
+              {pointCount} {ruPlural(pointCount, ['точка', 'точки', 'точек'])} маршрута
+            </button>
+          )}
         </nav>
       </div>
     </header>

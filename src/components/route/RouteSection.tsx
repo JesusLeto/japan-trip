@@ -3,6 +3,7 @@ import { useApp } from '../../state/AppContext';
 import { computeTotalCost, formatDaySummary } from '../../utils/dayInfo';
 import { formatYen } from '../../utils/money';
 import { ruPlural } from '../../utils/pluralize';
+import { SectionHeading } from '../SectionHeading';
 import { DayStrip } from './DayStrip';
 import { DayPanel } from './DayPanel';
 import { RouteMap, type RouteMapHandle } from './RouteMap';
@@ -10,26 +11,28 @@ import { RouteMap, type RouteMapHandle } from './RouteMap';
 export function RouteSection() {
   const { trip, state } = useApp();
   const mapRef = useRef<RouteMapHandle>(null);
+  const hasMapPoints = trip.days.some((d) => d.points.length > 0);
   const day = trip.days.find((d) => d.id === state.day) ?? null;
+
+  if (!hasMapPoints) return null;
 
   const summary = day
     ? formatDaySummary(day)
     : (() => {
         const totalPts = trip.days.reduce((sum, d) => sum + d.points.length, 0);
         const totalCost = computeTotalCost(trip.days);
-        return `${totalPts} ${ruPlural(totalPts, ['точка', 'точки', 'точек'])} · ${trip.meta.routeOverviewSummary} · транспорт всего ~${formatYen(totalCost)}`;
+        return `${totalPts} ${ruPlural(totalPts, ['точка', 'точки', 'точек'])} · ${trip.meta.routeOverviewSummary ?? ''} · транспорт всего ~${formatYen(totalCost)}`;
       })();
 
   return (
     <section id="sec-map" className="border-t border-bg-active">
       <div className="mx-auto max-w-[1160px] px-6 pt-[72px] pb-[80px] max-[900px]:px-5">
-        <div className="font-mono text-xs font-medium tracking-[0.12em] text-text-faint">/ 03</div>
-        <h2 className="mt-3.5 mb-2.5 text-[34px] leading-[1.15] font-bold tracking-[-0.01em] text-text-bright">
-          Маршрут <em className="text-accent">на карте</em>
-        </h2>
-        <p className="max-w-[560px] text-[15px] leading-[1.6] text-text-muted">
-          Клик по дню — карта зумится на его точки. Клик по точке в панели дня — центрирует карту.
-        </p>
+        <SectionHeading
+          num="/ 03"
+          titlePrefix="Маршрут"
+          titleAccent="на карте"
+          subtitle="Клик по дню — карта зумится на его точки. Клик по точке в панели дня — центрирует карту."
+        />
 
         <DayStrip />
         <div className="mb-[18px] font-mono text-xs font-medium text-text-dim">{summary}</div>

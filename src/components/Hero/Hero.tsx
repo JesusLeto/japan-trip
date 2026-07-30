@@ -11,7 +11,23 @@ export function Hero() {
       <h1 className="mt-5 mb-6 max-w-[860px] text-[62px] leading-[1.06] font-bold tracking-[-0.02em] text-text-bright text-balance max-[900px]:text-[38px]">
         {trip.meta.heroTitle} <em className="text-accent">{trip.meta.heroTitleAccent}</em>
       </h1>
-      <p className="max-w-[620px] text-lg leading-[1.6] text-text-muted">{trip.meta.heroSubtitle}</p>
+      {trip.meta.heroSubtitle.map((paragraph) => (
+        <p key={paragraph} className="mt-3 max-w-[620px] text-lg leading-[1.6] text-text-muted first:mt-0">
+          {paragraph}
+        </p>
+      ))}
+      {trip.meta.heroChips.length > 0 && (
+        <div className="mt-6 flex flex-wrap gap-2.5">
+          {trip.meta.heroChips.map((chip) => (
+            <span
+              key={chip}
+              className="rounded-full border border-border bg-bg-raised px-3.5 py-1.5 font-mono text-[12.5px] text-text-dim"
+            >
+              {chip}
+            </span>
+          ))}
+        </div>
+      )}
     </section>
   );
 }
