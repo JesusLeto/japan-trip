@@ -73,6 +73,22 @@ interface TripData {
 3. Сшить way-члены с `role=""` в одну ломаную (у соседних ways совпадают концы, часть ways идёт в обратную сторону — их надо разворачивать), упростить алгоритмом Дугласа–Пекера. Для Д1: 163 way → 636 точек → 37 точек при допуске ~30 м.
 4. Вставить в `legs[i].path` и указать в комментарии id relation и лицензию: данные OSM под ODbL, атрибуция обязательна.
 
+### Пешие и автомобильные сегменты — через роутер
+
+Для переходов пешком relation'а нет, нужен роутинг. Публичные API **без ключа**:
+
+| Сервис | Запрос | Профиль |
+|---|---|---|
+| OSRM FOSSGIS | `https://routing.openstreetmap.de/routed-foot/route/v1/foot/<lon,lat>;<lon,lat>?overview=full&geometries=geojson` | есть `routed-foot`, `routed-bike`, `routed-car` |
+| Valhalla FOSSGIS | `https://valhalla1.openstreetmap.de/route?json={...,"costing":"pedestrian"}` | `pedestrian`, `bicycle`, `auto` |
+| BRouter | `https://brouter.de/brouter?lonlats=<lon,lat>\|<lon,lat>&profile=hiking-beta&format=geojson` | `hiking-beta`, `trekking`, `shortest` |
+
+**Осторожно с `router.project-osrm.org`**: там поднят только автомобильный профиль, и запросы с `/foot/` или `/walking/` молча отдают автомобильный маршрут. На отрезке Дотонбори → Синсэкай он выдал 3.26 км объезда по односторонним вместо пеших 2.26 км. Всегда сверяй длину со здравым смыслом: пеший маршрут редко длиннее прямой больше чем в 1.3–1.4 раза.
+
+Проверка на том же отрезке: routed-foot 2262 м / 30 мин, Valhalla 2406 м / 30 мин, BRouter 2286 м / 27 мин. Для коротких городских переходов упрощай с допуском ~12 м. Сервисы бесплатны в режиме fair use (единичные запросы руками — да, массовая выкачка — нет).
+
+ORS (`api.openrouteservice.org`) и GraphHopper тоже умеют `foot-walking`, но требуют бесплатный API-ключ — без него отдают 401.
+
 Рендерится `RouteMap` под описанием; когда у дня есть точки, рядом с картой появляется таймлайн `DayPanelDayDetail` (клик по точке центрирует карту).
 
 ### Маршрут заполняется по частям
