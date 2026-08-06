@@ -10,6 +10,8 @@
 
 Цифры (цены, курсы, визовые сроки) устаревают — для решений с ценой ошибки открывай ссылку на источник из шапки файла и сверяй.
 
+**Начинаешь новую сессию — прочитай [docs/STATE.md](docs/STATE.md).** Там состояние маршрута, открытые вопросы и грабли, на которые уже наступали (подмена профиля в OSRM, баны Nominatim, лимиты My Maps). Провенанс каждой координаты — в [docs/knowledge/route-provenance.md](docs/knowledge/route-provenance.md), список утверждений плана без подтверждения в базе — в [docs/knowledge/unverified-claims.md](docs/knowledge/unverified-claims.md).
+
 ## Стек
 
 - React 19 + TypeScript, Vite
