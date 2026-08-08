@@ -297,7 +297,7 @@
 </Placemark>
 <Placemark>
 <name>Д6.3 Замок Химэдзи</name>
-<description>Единственный из крупных японских замков, сохранившийся в оригинале, а не бетонная реконструкция: деревянные лестницы, узкие переходы, реальный масштаб обороны XVII века.</description>
+<description>Единственный из крупных японских замков, сохранившийся в оригинале, а не бетонная реконструкция: деревянные лестницы, узкие переходы, реальный масштаб обороны XVII века. Работает 9:00–17:00, вход только до 16:00. Билет ¥2500 со взрослого, комбинированный с садом Коко-эн — ¥2600.</description>
 <styleUrl>#s-d6</styleUrl>
 <Point><coordinates>134.69402,34.839331,0</coordinates></Point>
 </Placemark>
@@ -752,22 +752,22 @@
 <LineString><tessellate>1</tessellate><coordinates>139.665685,35.709241,0 139.789728,35.64938,0</coordinates></LineString>
 </Placemark>
 <Placemark>
-<name>Д14.1 Парк Уэно</name>
+<name>Д14.1 Внешний рынок Цукидзи</name>
+<description>Утренний рынок: лавки 5:00–13:00/15:00, суши-заведения до 14:30–15:00, дальше перерыв до 17:00. По воскресеньям и праздникам закрыт. До 9:00 приоритет у профессиональных закупщиков. Аукцион тунца переехал в Тоёсу, семейные едальни остались — суши без брони, от ¥3000 на человека.</description>
+<styleUrl>#s-d14</styleUrl>
+<Point><coordinates>139.770473,35.665388,0</coordinates></Point>
+</Placemark>
+<Placemark>
+<name>Д14.2 Парк Уэно</name>
 <description>Бесплатный парк в центре Токио; зоопарк внутри средний и без панд — их забрали в Китай в январе 2026-го, так что при выборе можно пропустить.</description>
 <styleUrl>#s-d14</styleUrl>
 <Point><coordinates>139.773828,35.715291,0</coordinates></Point>
 </Placemark>
 <Placemark>
-<name>Д14.2 Рынок Амэёко</name>
+<name>Д14.3 Рынок Амэёко</name>
 <description>Шумные ряды у станции Уэно с дешёвыми снэками, специями и одеждой — удобно закрыть последние покупки без туристической наценки.</description>
 <styleUrl>#s-d14</styleUrl>
 <Point><coordinates>139.774543,35.710059,0</coordinates></Point>
-</Placemark>
-<Placemark>
-<name>Д14.3 Внешний рынок Цукидзи</name>
-<description>Последний обед: сам аукцион переехал в Тоёсу, но суши-заведения остались — свежее суши без брони, от ¥3000 на человека плюс пиво.</description>
-<styleUrl>#s-d14</styleUrl>
-<Point><coordinates>139.770473,35.665388,0</coordinates></Point>
 </Placemark>
 <Placemark>
 <name>Д14.4 Аэропорт Ханэда</name>
@@ -776,22 +776,22 @@
 <Point><coordinates>139.776099,35.545692,0</coordinates></Point>
 </Placemark>
 <Placemark>
+<name>Д14 · МЕТРО Цукидзи → Уэно, метро (схематично: прямая, реальной трассы нет)</name>
+<description>25 мин · 200 ¥</description>
+<styleUrl>#s-d14</styleUrl>
+<LineString><tessellate>1</tessellate><coordinates>139.770473,35.665388,0 139.773828,35.715291,0</coordinates></LineString>
+</Placemark>
+<Placemark>
 <name>Д14 · ПЕШКОМ Парк Уэно → рынок Амэёко</name>
 <description>9 мин · бесплатно</description>
 <styleUrl>#s-d14</styleUrl>
 <LineString><tessellate>1</tessellate><coordinates>139.773828,35.715291,0 139.773872,35.715234,0 139.773728,35.715048,0 139.77355,35.714775,0 139.773393,35.714525,0 139.77321,35.714226,0 139.773122,35.714034,0 139.773037,35.713719,0 139.773028,35.713546,0 139.773021,35.713296,0 139.773034,35.713072,0 139.773103,35.712646,0 139.773141,35.712493,0 139.773382,35.711474,0 139.773401,35.711394,0 139.773446,35.711097,0 139.773492,35.710802,0 139.773499,35.710758,0 139.773616,35.710731,0 139.773758,35.710701,0 139.773832,35.710677,0 139.773993,35.710621,0 139.774022,35.71057,0 139.774539,35.710377,0 139.774543,35.710059,0</coordinates></LineString>
 </Placemark>
 <Placemark>
-<name>Д14 · МЕТРО Уэно → Цукидзи, метро (схематично: прямая, реальной трассы нет)</name>
-<description>~15 мин · бесплатно</description>
-<styleUrl>#s-d14</styleUrl>
-<LineString><tessellate>1</tessellate><coordinates>139.774543,35.710059,0 139.770473,35.665388,0</coordinates></LineString>
-</Placemark>
-<Placemark>
-<name>Д14 · ЭКСПРЕСС Keikyu/Asakusa Line до Ханэды (схематично: прямая, реальной трассы нет)</name>
+<name>Д14 · ЭКСПРЕСС Амэёко → Ханэда, Keikyu/Asakusa Line (схематично: прямая, реальной трассы нет)</name>
 <description>30–40 мин · 600 ¥</description>
 <styleUrl>#s-d14</styleUrl>
-<LineString><tessellate>1</tessellate><coordinates>139.770473,35.665388,0 139.776099,35.545692,0</coordinates></LineString>
+<LineString><tessellate>1</tessellate><coordinates>139.774543,35.710059,0 139.776099,35.545692,0</coordinates></LineString>
 </Placemark>
 </Folder>
 </Document>
