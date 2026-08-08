@@ -62,28 +62,40 @@
 <LineString><tessellate>1</tessellate><coordinates>135.50123821614974,34.669150019554,0 135.501614,34.665011,0 135.502172,34.664483,0 135.502897,34.663292,0 135.503211,34.662137,0 135.503187,34.661083,0 135.503324,34.661059,0 135.502888,34.659232,0 135.505696,34.658749,0 135.505524,34.655293,0 135.505715,34.655292,0 135.505688,34.654269,0 135.506177,34.652728,0 135.506343,34.652696,0 135.50596692775554,34.65178223286455,0</coordinates></LineString>
 </Placemark>
 <Placemark>
-<name>Д2.1 Музей истории Осаки</name>
+<name>Д2.1 Рынок Куромон</name>
+<description>Завтрак в 8 минутах от отеля: крытая улица на 580 м и ~150 лавок, название — от почерневших ворот храма Энмё-дзи, сгоревшего в 1912-м. Едят на ходу: шпажки с морепродуктами у рыбной лавки, сок у фруктовой, матча-софт у чайной. Открывается с 7:00.</description>
+<styleUrl>#s-d2</styleUrl>
+<Point><coordinates>135.50695,34.664189,0</coordinates></Point>
+</Placemark>
+<Placemark>
+<name>Д2.2 Музей истории Осаки</name>
 <description>Насыщенная и понятная экспозиция про становление города — идти первым делом, пока свежие силы. В дождь здесь можно задержаться дольше обычного, этажей несколько.</description>
 <styleUrl>#s-d2</styleUrl>
 <Point><coordinates>135.520813,34.682618,0</coordinates></Point>
 </Placemark>
 <Placemark>
-<name>Д2.2 Осакский замок</name>
+<name>Д2.3 Осакский замок</name>
 <description>Через дорогу от музея: новодел 1931 года, но с верхних этажей отличный вид на парк, а сам парк с утра почти пустой. Отдельную очередь внутрь ради «музея самураев» брать не стоит.</description>
 <styleUrl>#s-d2</styleUrl>
 <Point><coordinates>135.525856,34.687373,0</coordinates></Point>
 </Placemark>
 <Placemark>
-<name>Д2.3 Сумиёси-тайся</name>
+<name>Д2.4 Сумиёси-тайся</name>
 <description>Святилище с изогнутым мостом, где продают редкие амулеты для рыбаков. Важно: крупные святилища и лавки с амулетами работают примерно до 16:00, вечером приедете к закрытым дверям.</description>
 <styleUrl>#s-d2</styleUrl>
 <Point><coordinates>135.493101,34.613003,0</coordinates></Point>
 </Placemark>
 <Placemark>
-<name>Д2.4 Дотонбори</name>
+<name>Д2.5 Дотонбори</name>
 <description>Вечером — второй заход в Намбу/Дотонбори, теперь уже узнавая улицы после первого дня.</description>
 <styleUrl>#s-d2</styleUrl>
 <Point><coordinates>135.501572,34.669031,0</coordinates></Point>
+</Placemark>
+<Placemark>
+<name>Д2 · МЕТРО Ниппонбаси → Танимати-4-тёме (схематично: прямая, реальной трассы нет)</name>
+<description>15 мин · 240 ¥</description>
+<styleUrl>#s-d2</styleUrl>
+<LineString><tessellate>1</tessellate><coordinates>135.50695,34.664189,0 135.520813,34.682618,0</coordinates></LineString>
 </Placemark>
 <Placemark>
 <name>Д2 · ПЕШКОМ пешком через парк Осакского замка</name>
@@ -131,12 +143,6 @@
 <Point><coordinates>135.807453,34.8895,0</coordinates></Point>
 </Placemark>
 <Placemark>
-<name>Д3.5 Рынок Куромон</name>
-<description>Крытая улица на 580 м и ~150 лавок; название — от почерневших ворот храма Энмё-дзи, сгоревшего в 1912-м. Сюда идут есть на ходу: шпажки с морепродуктами у рыбной лавки, сок у фруктовой, матча-софт у чайной. Не тяните до закрытия — большинство рядов сворачивается к 17:00–18:00.</description>
-<styleUrl>#s-d3</styleUrl>
-<Point><coordinates>135.506951,34.664189,0</coordinates></Point>
-</Placemark>
-<Placemark>
 <name>Д3 · ПЕШКОМ через парк Нара</name>
 <description>34 мин · бесплатно</description>
 <styleUrl>#s-d3</styleUrl>
@@ -153,12 +159,6 @@
 <description>25–30 мин · 500 ¥</description>
 <styleUrl>#s-d3</styleUrl>
 <LineString><tessellate>1</tessellate><coordinates>135.828857,34.681925,0 135.807453,34.8895,0</coordinates></LineString>
-</Placemark>
-<Placemark>
-<name>Д3 · JR JR обратно в Осаку (схематично: прямая, реальной трассы нет)</name>
-<description>45 мин · 580 ¥</description>
-<styleUrl>#s-d3</styleUrl>
-<LineString><tessellate>1</tessellate><coordinates>135.807453,34.8895,0 135.506951,34.664189,0</coordinates></LineString>
 </Placemark>
 <Placemark>
 <name>Д4.1 Осака, вокзал</name>
@@ -231,7 +231,7 @@
 <name>Д5–Д6 · Киото, Химэдзи</name>
 <Placemark>
 <name>Д5.1 Fushimi Inari Taisha</name>
-<description>Святилище тысячи тории. Приходить к открытию станции (~7:00) и проходить маршрут целиком — ~2–2.5 часа туда-обратно до вершины горы Инари, где тории редеют и почти никого нет.</description>
+<description>Святилище тысячи тории, открыто круглосуточно. Проходить маршрут целиком — ~2–2.5 часа туда-обратно до вершины горы Инари, где тории редеют и почти никого нет. Чем раньше придёте, тем меньше толп, но и в девять утра уже терпимо.</description>
 <styleUrl>#s-d5</styleUrl>
 <Point><coordinates>135.77971,34.967519,0</coordinates></Point>
 </Placemark>
