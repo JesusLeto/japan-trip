@@ -236,40 +236,28 @@
 <Point><coordinates>135.77971,34.967519,0</coordinates></Point>
 </Placemark>
 <Placemark>
-<name>Д5.2 Сакэварня Gekkeikan Okura</name>
-<description>Музей-сакэварня в районе Фусими: сакэ на подземных источниках. Заглянуть на обратном пути с горы.</description>
-<styleUrl>#s-d5</styleUrl>
-<Point><coordinates>135.761629,34.928879,0</coordinates></Point>
-</Placemark>
-<Placemark>
-<name>Д5.3 Kiyomizu-dera</name>
+<name>Д5.2 Kiyomizu-dera</name>
 <description>Главный храм второй половины дня, после обеда и отдыха; отсюда начинается спуск через старые улочки Хигасиямы.</description>
 <styleUrl>#s-d5</styleUrl>
 <Point><coordinates>135.784439,34.994303,0</coordinates></Point>
 </Placemark>
 <Placemark>
-<name>Д5.4 Ninenzaka / Sannenzaka</name>
+<name>Д5.3 Ninenzaka / Sannenzaka</name>
 <description>Мощёные улочки-лестницы со старыми лавками и сувенирами — спуск от Kiyomizu-dera в сторону Kodai-ji.</description>
 <styleUrl>#s-d5</styleUrl>
 <Point><coordinates>135.780743,34.998997,0</coordinates></Point>
 </Placemark>
 <Placemark>
-<name>Д5.5 Kodai-ji</name>
+<name>Д5.4 Kodai-ji</name>
 <description>Храм со своей бамбуковой рощей и чайными домиками — заметно тише знаменитой рощи в Arashiyama.</description>
 <styleUrl>#s-d5</styleUrl>
 <Point><coordinates>135.780596,35.000303,0</coordinates></Point>
 </Placemark>
 <Placemark>
-<name>Д5 · ПЕШКОМ спуск от Fushimi Inari в район Фусими</name>
-<description>81 мин · бесплатно</description>
-<styleUrl>#s-d5</styleUrl>
-<LineString><tessellate>1</tessellate><coordinates>135.77971,34.967519,0 135.779525,34.967152,0 135.778567,34.966288,0 135.776111,34.966627,0 135.775493,34.966498,0 135.774575,34.966928,0 135.773474,34.965963,0 135.771761,34.965973,0 135.770341,34.965808,0 135.770362,34.962957,0 135.770422,34.960446,0 135.770439,34.959005,0 135.770386,34.956506,0 135.770216,34.954805,0 135.770166,34.953331,0 135.769848,34.951142,0 135.768879,34.949897,0 135.768419,34.947836,0 135.767491,34.944826,0 135.766251,34.944732,0 135.765345,34.944078,0 135.765065,34.941831,0 135.764934,34.93987,0 135.764087,34.936425,0 135.762336,34.929931,0 135.759973,34.93009,0 135.761629,34.928879,0</coordinates></LineString>
-</Placemark>
-<Placemark>
-<name>Д5 · АВТОБУС городской автобус до Kiyomizu-dera</name>
+<name>Д5 · АВТОБУС Fushimi Inari → Kiyomizu-dera, Keihan + автобус</name>
 <description>20–25 мин · 230 ¥</description>
 <styleUrl>#s-d5</styleUrl>
-<LineString><tessellate>1</tessellate><coordinates>135.761629,34.928879,0 135.761911,34.92898,0 135.759258,34.930297,0 135.75883,34.93111,0 135.75836,34.93359,0 135.757895,34.936194,0 135.757277,34.941398,0 135.757533,34.945446,0 135.758419,34.947534,0 135.758874,34.950637,0 135.760458,34.956654,0 135.761936,34.963346,0 135.76255,34.967377,0 135.763075,34.972374,0 135.763956,34.977061,0 135.766254,34.980296,0 135.772864,34.981767,0 135.773959,34.983621,0 135.77421,34.986709,0 135.774689,34.991147,0 135.776306,34.994424,0 135.779106,34.995631,0 135.779925,34.997086,0 135.781185,34.996584,0 135.782432,34.996028,0 135.78327,34.996009,0 135.784439,34.994303,0</coordinates></LineString>
+<LineString><tessellate>1</tessellate><coordinates>135.77971,34.967519,0 135.761911,34.92898,0 135.759258,34.930297,0 135.75883,34.93111,0 135.75836,34.93359,0 135.757895,34.936194,0 135.757277,34.941398,0 135.757533,34.945446,0 135.758419,34.947534,0 135.758874,34.950637,0 135.760458,34.956654,0 135.761936,34.963346,0 135.76255,34.967377,0 135.763075,34.972374,0 135.763956,34.977061,0 135.766254,34.980296,0 135.772864,34.981767,0 135.773959,34.983621,0 135.77421,34.986709,0 135.774689,34.991147,0 135.776306,34.994424,0 135.779106,34.995631,0 135.779925,34.997086,0 135.781185,34.996584,0 135.782432,34.996028,0 135.78327,34.996009,0 135.784439,34.994303,0</coordinates></LineString>
 </Placemark>
 <Placemark>
 <name>Д5 · ПЕШКОМ спуск по улочкам Хигасиямы</name>
@@ -710,22 +698,22 @@
 <Folder>
 <name>Д13–Д14 · Токио</name>
 <Placemark>
-<name>Д13.1 AmiAmi (Акихабара)</name>
+<name>Д13.1 Nakano Broadway</name>
+<description>Многоэтажный барахольный рай с винтажным мерчем и магазинами сети Mandarake; обед в фуд-корте того же здания.</description>
+<styleUrl>#s-d13</styleUrl>
+<Point><coordinates>139.665685,35.709241,0</coordinates></Point>
+</Placemark>
+<Placemark>
+<name>Д13.2 AmiAmi (Акихабара)</name>
 <description>Семь этажей официального мерча Good Smile Company в Акихабаре — главная утренняя точка охоты за фигурками.</description>
 <styleUrl>#s-d13</styleUrl>
 <Point><coordinates>139.771462,35.697928,0</coordinates></Point>
 </Placemark>
 <Placemark>
-<name>Д13.2 Radio Kaikan</name>
+<name>Д13.3 Radio Kaikan</name>
 <description>Целое здание магазинчиков с подержанными фигурками: попадаются редкости, которых больше нигде нет.</description>
 <styleUrl>#s-d13</styleUrl>
 <Point><coordinates>139.77195,35.697882,0</coordinates></Point>
-</Placemark>
-<Placemark>
-<name>Д13.3 Nakano Broadway</name>
-<description>Многоэтажный барахольный рай с винтажным мерчем и магазинами сети Mandarake; обед в фуд-корте того же здания.</description>
-<styleUrl>#s-d13</styleUrl>
-<Point><coordinates>139.665685,35.709241,0</coordinates></Point>
 </Placemark>
 <Placemark>
 <name>Д13.4 teamLab Planets</name>
@@ -734,22 +722,22 @@
 <Point><coordinates>139.789728,35.64938,0</coordinates></Point>
 </Placemark>
 <Placemark>
+<name>Д13 · JR JR Chuo Line, Nakano → Akihabara (схематично: прямая, реальной трассы нет)</name>
+<description>20 мин · 210 ¥</description>
+<styleUrl>#s-d13</styleUrl>
+<LineString><tessellate>1</tessellate><coordinates>139.665685,35.709241,0 139.771462,35.697928,0</coordinates></LineString>
+</Placemark>
+<Placemark>
 <name>Д13 · ПЕШКОМ по Тюо-дори, Акихабара</name>
 <description>2 мин · бесплатно</description>
 <styleUrl>#s-d13</styleUrl>
 <LineString><tessellate>1</tessellate><coordinates>139.771462,35.697928,0 139.771408,35.698135,0 139.771801,35.69813,0 139.77195,35.697882,0</coordinates></LineString>
 </Placemark>
 <Placemark>
-<name>Д13 · JR JR Chuo Line, Akihabara → Nakano (схематично: прямая, реальной трассы нет)</name>
-<description>~20 мин · 210 ¥</description>
+<name>Д13 · МЕТРО Akihabara → Toyosu, метро с пересадкой (схематично: прямая, реальной трассы нет)</name>
+<description>25 мин · 300 ¥</description>
 <styleUrl>#s-d13</styleUrl>
-<LineString><tessellate>1</tessellate><coordinates>139.77195,35.697882,0 139.665685,35.709241,0</coordinates></LineString>
-</Placemark>
-<Placemark>
-<name>Д13 · МЕТРО метро с пересадкой, Nakano → Toyosu (схематично: прямая, реальной трассы нет)</name>
-<description>~40 мин · 350 ¥</description>
-<styleUrl>#s-d13</styleUrl>
-<LineString><tessellate>1</tessellate><coordinates>139.665685,35.709241,0 139.789728,35.64938,0</coordinates></LineString>
+<LineString><tessellate>1</tessellate><coordinates>139.77195,35.697882,0 139.789728,35.64938,0</coordinates></LineString>
 </Placemark>
 <Placemark>
 <name>Д14.1 Внешний рынок Цукидзи</name>
