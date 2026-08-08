@@ -6,10 +6,10 @@
 <Style id="s-d1"><IconStyle><color>ffdc7eb5</color><scale>1.1</scale></IconStyle><LineStyle><color>ffdc7eb5</color><width>4</width></LineStyle></Style>
 <Style id="s-d2"><IconStyle><color>ffdc7eb5</color><scale>1.1</scale></IconStyle><LineStyle><color>ffdc7eb5</color><width>4</width></LineStyle></Style>
 <Style id="s-d3"><IconStyle><color>ffa6948a</color><scale>1.1</scale></IconStyle><LineStyle><color>ffa6948a</color><width>4</width></LineStyle></Style>
-<Style id="s-d4"><IconStyle><color>ff58a4e0</color><scale>1.1</scale></IconStyle><LineStyle><color>ff58a4e0</color><width>4</width></LineStyle></Style>
-<Style id="s-d5"><IconStyle><color>ff58a4e0</color><scale>1.1</scale></IconStyle><LineStyle><color>ff58a4e0</color><width>4</width></LineStyle></Style>
-<Style id="s-d6"><IconStyle><color>ffa6948a</color><scale>1.1</scale></IconStyle><LineStyle><color>ffa6948a</color><width>4</width></LineStyle></Style>
-<Style id="s-d7"><IconStyle><color>ffa6948a</color><scale>1.1</scale></IconStyle><LineStyle><color>ffa6948a</color><width>4</width></LineStyle></Style>
+<Style id="s-d4"><IconStyle><color>ffa6948a</color><scale>1.1</scale></IconStyle><LineStyle><color>ffa6948a</color><width>4</width></LineStyle></Style>
+<Style id="s-d5"><IconStyle><color>ffa6948a</color><scale>1.1</scale></IconStyle><LineStyle><color>ffa6948a</color><width>4</width></LineStyle></Style>
+<Style id="s-d6"><IconStyle><color>ff58a4e0</color><scale>1.1</scale></IconStyle><LineStyle><color>ff58a4e0</color><width>4</width></LineStyle></Style>
+<Style id="s-d7"><IconStyle><color>ff58a4e0</color><scale>1.1</scale></IconStyle><LineStyle><color>ff58a4e0</color><width>4</width></LineStyle></Style>
 <Style id="s-d8"><IconStyle><color>ff69b07f</color><scale>1.1</scale></IconStyle><LineStyle><color>ff69b07f</color><width>4</width></LineStyle></Style>
 <Style id="s-d9"><IconStyle><color>ff69b07f</color><scale>1.1</scale></IconStyle><LineStyle><color>ff69b07f</color><width>4</width></LineStyle></Style>
 <Style id="s-d10"><IconStyle><color>ffd1a34f</color><scale>1.1</scale></IconStyle><LineStyle><color>ffd1a34f</color><width>4</width></LineStyle></Style>
@@ -117,7 +117,7 @@
 </Placemark>
 </Folder>
 <Folder>
-<name>Д3–Д4 · Нара / Удзи, Киото</name>
+<name>Д3–Д4 · Нара / Удзи, Химэдзи</name>
 <Placemark>
 <name>Д3.1 Парк Нара и олени</name>
 <description>Тысячи ручных оленей; крекеры сика-сэмбэй покупать только у официальных лоточников, ничем своим не кормить.</description>
@@ -162,225 +162,213 @@
 </Placemark>
 <Placemark>
 <name>Д4.1 Осака, вокзал</name>
-<description>Утренним поездом в Киото — ехать полчаса, это как из спального района в центр Москвы.</description>
+<description>Старт дня: от отеля в Намбе метро Мидосудзи до вокзала Осака/Умэда, дальше JR Kobe Line до Химэдзи без пересадок. Здесь же берут экибэн — региональный бенто в коробке, который продают именно на вокзалах.</description>
 <styleUrl>#s-d4</styleUrl>
 <Point><coordinates>135.496177,34.702509,0</coordinates></Point>
 </Placemark>
 <Placemark>
-<name>Д4.2 Киото, вокзал</name>
-<description>Отель у вокзала: оставить чемоданы, многие отели принимают багаж до заселения.</description>
+<name>Д4.2 Станция Химэдзи</name>
+<description>Точка прибытия в Химэдзи. На станции берут экибэн перед замком — это часть ритуала, а не компромисс. От станции к замку ведёт прямая широкая улица.</description>
 <styleUrl>#s-d4</styleUrl>
+<Point><coordinates>134.690242,34.826901,0</coordinates></Point>
+</Placemark>
+<Placemark>
+<name>Д4.3 Замок Химэдзи</name>
+<description>Единственный из крупных японских замков, сохранившийся в оригинале, а не бетонная реконструкция: деревянные лестницы, узкие переходы, реальный масштаб обороны XVII века. Работает 9:00–17:00, вход только до 16:00. Билет ¥2500 со взрослого, комбинированный с садом Коко-эн — ¥2600.</description>
+<styleUrl>#s-d4</styleUrl>
+<Point><coordinates>134.69402,34.839331,0</coordinates></Point>
+</Placemark>
+<Placemark>
+<name>Д4.4 Сад Коко-эн</name>
+<description>Девять садов в японском стиле эпохи Эдо рядом с замком. Здесь устраивают пикник с бэнто — по сравнению с самим замком почти без туристов.</description>
+<styleUrl>#s-d4</styleUrl>
+<Point><coordinates>134.689613,34.837969,0</coordinates></Point>
+</Placemark>
+<Placemark>
+<name>Д4 · ПОЕЗД JR Kobe Line, Special Rapid, Осака → Химэдзи (схематично: прямая, реальной трассы нет)</name>
+<description>~1 час · 2310 ¥</description>
+<styleUrl>#s-d4</styleUrl>
+<LineString><tessellate>1</tessellate><coordinates>135.496177,34.702509,0 134.690242,34.826901,0</coordinates></LineString>
+</Placemark>
+<Placemark>
+<name>Д4 · ПЕШКОМ от станции Химэдзи по главной улице к замку</name>
+<description>25 мин · бесплатно</description>
+<styleUrl>#s-d4</styleUrl>
+<LineString><tessellate>1</tessellate><coordinates>134.690242,34.826901,0 134.690185,34.827221,0 134.690439,34.827858,0 134.690199,34.828074,0 134.690659,34.829446,0 134.691091,34.830717,0 134.691851,34.833095,0 134.692167,34.834037,0 134.692563,34.835283,0 134.6925,34.835619,0 134.692857,34.835888,0 134.693192,34.836063,0 134.692681,34.83672,0 134.692666,34.838145,0 134.692664,34.838402,0 134.692462,34.838761,0 134.69271,34.839356,0 134.693002,34.839543,0 134.693086,34.839636,0 134.693258,34.839615,0 134.693654,34.839665,0 134.693647,34.839622,0 134.693623,34.839547,0 134.693688,34.839309,0 134.693822,34.839356,0 134.69402,34.839331,0</coordinates></LineString>
+</Placemark>
+<Placemark>
+<name>Д4 · ПЕШКОМ от донжона замка через ворота к саду Коко-эн</name>
+<description>17 мин · бесплатно</description>
+<styleUrl>#s-d4</styleUrl>
+<LineString><tessellate>1</tessellate><coordinates>134.69402,34.839331,0 134.693822,34.839356,0 134.693688,34.839309,0 134.693623,34.839547,0 134.693647,34.839622,0 134.693654,34.839665,0 134.693258,34.839615,0 134.693086,34.839636,0 134.693002,34.839543,0 134.69271,34.839356,0 134.692462,34.838761,0 134.692664,34.838402,0 134.692666,34.838145,0 134.692681,34.83672,0 134.693192,34.836063,0 134.692857,34.835888,0 134.6925,34.835619,0 134.691906,34.835866,0 134.690275,34.836717,0 134.690458,34.837302,0 134.690498,34.837777,0 134.690341,34.837836,0 134.690203,34.83786,0 134.68982,34.837886,0 134.689647,34.837988,0 134.689613,34.837969,0</coordinates></LineString>
+</Placemark>
+</Folder>
+<Folder>
+<name>Д5–Д6 · Кобэ / Авадзи, Киото</name>
+<Placemark>
+<name>Д5.1 Кобэ, Санномия</name>
+<description>Точка входа в Кобэ, ~20 минут от вокзала Осака на JR Special Rapid; отсюда же уходят автобусы на Авадзи.</description>
+<styleUrl>#s-d5</styleUrl>
+<Point><coordinates>135.195417,34.693375,0</coordinates></Point>
+</Placemark>
+<Placemark>
+<name>Д5.2 Нанкинмати (Чайнатаун)</name>
+<description>Настоящий китайский квартал с уличной едой — заскочить утром самое то, отдельного дня не стоит.</description>
+<styleUrl>#s-d5</styleUrl>
+<Point><coordinates>135.188382,34.688107,0</coordinates></Point>
+</Placemark>
+<Placemark>
+<name>Д5.3 Китано-Идзинкан</name>
+<description>Деревянные особняки посольств XIX века — необычный для Японии архитектурный микс.</description>
+<styleUrl>#s-d5</styleUrl>
+<Point><coordinates>135.191278,34.70097,0</coordinates></Point>
+</Placemark>
+<Placemark>
+<name>Д5.4 Nijigen no Mori, Авадзи</name>
+<description>Зоны по Наруто, Годзилле, Dragon Quest и Monster Hunter. Билет в каждую зону отдельный.</description>
+<styleUrl>#s-d5</styleUrl>
+<Point><coordinates>135.002126,34.574838,0</coordinates></Point>
+</Placemark>
+<Placemark>
+<name>Д5.5 Гора Рокко</name>
+<description>Фуникулёр наверх: сверху виден весь осакский залив, под вечер это лучший вид дня.</description>
+<styleUrl>#s-d5</styleUrl>
+<Point><coordinates>135.263745,34.777992,0</coordinates></Point>
+</Placemark>
+<Placemark>
+<name>Д5 · ПЕШКОМ к Чайнатауну</name>
+<description>14 мин · бесплатно</description>
+<styleUrl>#s-d5</styleUrl>
+<LineString><tessellate>1</tessellate><coordinates>135.195417,34.693375,0 135.195283,34.693297,0 135.194943,34.693147,0 135.194844,34.692935,0 135.19493,34.692572,0 135.194593,34.692448,0 135.194928,34.691826,0 135.194975,34.691539,0 135.194662,34.691366,0 135.193169,34.69082,0 135.192327,34.690528,0 135.192117,34.690446,0 135.191364,34.690063,0 135.190801,34.689791,0 135.190171,34.689448,0 135.189674,34.689251,0 135.189537,34.688917,0 135.189558,34.688537,0 135.189451,34.688335,0 135.189324,34.688318,0 135.189162,34.688279,0 135.188822,34.688168,0 135.188672,34.688126,0 135.188382,34.688107,0</coordinates></LineString>
+</Placemark>
+<Placemark>
+<name>Д5 · ПЕШКОМ вверх к Китано</name>
+<description>25 мин · бесплатно</description>
+<styleUrl>#s-d5</styleUrl>
+<LineString><tessellate>1</tessellate><coordinates>135.188382,34.688107,0 135.18852,34.688095,0 135.188672,34.688126,0 135.188872,34.688186,0 135.189154,34.688814,0 135.188775,34.689849,0 135.189014,34.689928,0 135.189794,34.690524,0 135.189976,34.690909,0 135.190095,34.691085,0 135.190075,34.691296,0 135.191602,34.692276,0 135.191627,34.692401,0 135.192655,34.693331,0 135.193372,34.694086,0 135.1932,34.694315,0 135.192925,34.694875,0 135.192348,34.696335,0 135.19217,34.696778,0 135.192024,34.697063,0 135.191438,34.698072,0 135.190592,34.699421,0 135.190123,34.700471,0 135.191278,34.70097,0</coordinates></LineString>
+</Placemark>
+<Placemark>
+<name>Д5 · АВТОБУС по мосту Акаси-Кайкё</name>
+<description>45 мин · 2000 ¥</description>
+<styleUrl>#s-d5</styleUrl>
+<LineString><tessellate>1</tessellate><coordinates>135.191278,34.70097,0 135.191292,34.700942,0 135.186902,34.696486,0 135.182848,34.688608,0 135.18523,34.685161,0 135.178158,34.675755,0 135.167323,34.667226,0 135.134163,34.647009,0 135.130408,34.649589,0 135.116123,34.655458,0 135.106188,34.650453,0 135.08991,34.65193,0 135.07889,34.648986,0 135.06973,34.651005,0 135.066303,34.659286,0 135.069626,34.659652,0 135.062386,34.653098,0 135.035571,34.633998,0 135.011812,34.589173,0 135.018467,34.580897,0 135.017274,34.58507,0 135.007842,34.58143,0 135.000519,34.575675,0 135.002126,34.574838,0</coordinates></LineString>
+</Placemark>
+<Placemark>
+<name>Д5 · КАНАТКА автобус обратно + фуникулёр на Рокко (схематично: прямая, реальной трассы нет)</name>
+<description>90 мин · бесплатно</description>
+<styleUrl>#s-d5</styleUrl>
+<LineString><tessellate>1</tessellate><coordinates>135.002126,34.574838,0 135.263745,34.777992,0</coordinates></LineString>
+</Placemark>
+<Placemark>
+<name>Д6.1 Осака, вокзал</name>
+<description>Утренним поездом в Киото — ехать полчаса, это как из спального района в центр Москвы.</description>
+<styleUrl>#s-d6</styleUrl>
+<Point><coordinates>135.496177,34.702509,0</coordinates></Point>
+</Placemark>
+<Placemark>
+<name>Д6.2 Киото, вокзал</name>
+<description>Отель у вокзала: оставить чемоданы, многие отели принимают багаж до заселения.</description>
+<styleUrl>#s-d6</styleUrl>
 <Point><coordinates>135.75847,34.986641,0</coordinates></Point>
 </Placemark>
 <Placemark>
-<name>Д4.3 Кинкаку-дзи</name>
+<name>Д6.3 Кинкаку-дзи</name>
 <description>Внутрь павильона не пускают вообще: смотрите снаружи минут пять, дальше неспешная прогулка по саду вокруг пруда — ради неё сюда и едут.</description>
-<styleUrl>#s-d4</styleUrl>
+<styleUrl>#s-d6</styleUrl>
 <Point><coordinates>135.729537,35.039529,0</coordinates></Point>
 </Placemark>
 <Placemark>
-<name>Д4.4 Рёан-дзи</name>
+<name>Д6.4 Рёан-дзи</name>
 <description>Самый известный сад камней Японии. Посидите на веранде минут десять молча — сад работает именно в этом формате.</description>
-<styleUrl>#s-d4</styleUrl>
+<styleUrl>#s-d6</styleUrl>
 <Point><coordinates>135.718088,35.033463,0</coordinates></Point>
 </Placemark>
 <Placemark>
-<name>Д4.5 Гион и Ясака-дзиндзя</name>
+<name>Д6.5 Гион и Ясака-дзиндзя</name>
 <description>Квартал гейш; святилище Ясака открыто круглосуточно и подсвечено ночью. Сворачивайте в боковые переулки, а не идите по главному бульвару.</description>
-<styleUrl>#s-d4</styleUrl>
+<styleUrl>#s-d6</styleUrl>
 <Point><coordinates>135.778403,35.00469,0</coordinates></Point>
 </Placemark>
 <Placemark>
-<name>Д4.6 Понтотё</name>
+<name>Д6.6 Понтотё</name>
 <description>Узкий переулок ресторанов вдоль реки Камогава. Ужин.</description>
-<styleUrl>#s-d4</styleUrl>
+<styleUrl>#s-d6</styleUrl>
 <Point><coordinates>135.771213,35.004246,0</coordinates></Point>
 </Placemark>
 <Placemark>
-<name>Д4 · JR JR Special Rapid (схематично: прямая, реальной трассы нет)</name>
+<name>Д6 · JR JR Special Rapid (схематично: прямая, реальной трассы нет)</name>
 <description>29 мин · 580 ¥</description>
-<styleUrl>#s-d4</styleUrl>
+<styleUrl>#s-d6</styleUrl>
 <LineString><tessellate>1</tessellate><coordinates>135.496177,34.702509,0 135.75847,34.986641,0</coordinates></LineString>
 </Placemark>
 <Placemark>
-<name>Д4 · АВТОБУС городской автобус (схематично: прямая, реальной трассы нет)</name>
+<name>Д6 · АВТОБУС городской автобус (схематично: прямая, реальной трассы нет)</name>
 <description>40 мин · 230 ¥</description>
-<styleUrl>#s-d4</styleUrl>
+<styleUrl>#s-d6</styleUrl>
 <LineString><tessellate>1</tessellate><coordinates>135.75847,34.986641,0 135.729537,35.039529,0</coordinates></LineString>
 </Placemark>
 <Placemark>
-<name>Д4 · ПЕШКОМ вокруг храмовых стен</name>
+<name>Д6 · ПЕШКОМ вокруг храмовых стен</name>
 <description>26 мин · бесплатно</description>
-<styleUrl>#s-d4</styleUrl>
+<styleUrl>#s-d6</styleUrl>
 <LineString><tessellate>1</tessellate><coordinates>135.729537,35.039529,0 135.729653,35.039147,0 135.730142,35.039051,0 135.731825,35.039151,0 135.731529,35.038443,0 135.730582,35.037414,0 135.730323,35.037264,0 135.72928,35.036146,0 135.728376,35.035175,0 135.727794,35.034871,0 135.72744,35.034802,0 135.726377,35.03493,0 135.725411,35.034821,0 135.724504,35.034615,0 135.722642,35.033554,0 135.721535,35.033271,0 135.720263,35.032962,0 135.719698,35.03294,0 135.719378,35.032867,0 135.719299,35.032984,0 135.718019,35.032917,0 135.717858,35.033102,0 135.717761,35.033348,0 135.718088,35.033463,0</coordinates></LineString>
 </Placemark>
 <Placemark>
-<name>Д4 · АВТОБУС городской автобус через центр (схематично: прямая, реальной трассы нет)</name>
+<name>Д6 · АВТОБУС городской автобус через центр (схематично: прямая, реальной трассы нет)</name>
 <description>40 мин · 230 ¥</description>
-<styleUrl>#s-d4</styleUrl>
+<styleUrl>#s-d6</styleUrl>
 <LineString><tessellate>1</tessellate><coordinates>135.718088,35.033463,0 135.778403,35.00469,0</coordinates></LineString>
 </Placemark>
 <Placemark>
-<name>Д4 · ПЕШКОМ к реке Камогава</name>
+<name>Д6 · ПЕШКОМ к реке Камогава</name>
 <description>10 мин · бесплатно</description>
-<styleUrl>#s-d4</styleUrl>
+<styleUrl>#s-d6</styleUrl>
 <LineString><tessellate>1</tessellate><coordinates>135.778403,35.00469,0 135.778344,35.004774,0 135.778176,35.004665,0 135.777867,35.004351,0 135.777577,35.004203,0 135.777483,35.004017,0 135.777342,35.003959,0 135.776962,35.003866,0 135.776389,35.00391,0 135.775187,35.003944,0 135.77498,35.003933,0 135.77438,35.003923,0 135.773153,35.003917,0 135.772948,35.003918,0 135.772602,35.003914,0 135.772217,35.003913,0 135.772144,35.004012,0 135.771961,35.004031,0 135.77194,35.003981,0 135.771901,35.00394,0 135.771838,35.003911,0 135.771138,35.003923,0 135.771231,35.003954,0 135.771213,35.004246,0</coordinates></LineString>
 </Placemark>
 </Folder>
 <Folder>
-<name>Д5–Д6 · Киото, Химэдзи</name>
+<name>Д7–Д8 · Киото, Коясан</name>
 <Placemark>
-<name>Д5.1 Fushimi Inari Taisha</name>
+<name>Д7.1 Fushimi Inari Taisha</name>
 <description>Святилище тысячи тории, открыто круглосуточно. Проходить маршрут целиком — ~2–2.5 часа туда-обратно до вершины горы Инари, где тории редеют и почти никого нет. Чем раньше придёте, тем меньше толп, но и в девять утра уже терпимо.</description>
-<styleUrl>#s-d5</styleUrl>
+<styleUrl>#s-d7</styleUrl>
 <Point><coordinates>135.77971,34.967519,0</coordinates></Point>
 </Placemark>
 <Placemark>
-<name>Д5.2 Kiyomizu-dera</name>
+<name>Д7.2 Kiyomizu-dera</name>
 <description>Главный храм второй половины дня, после обеда и отдыха; отсюда начинается спуск через старые улочки Хигасиямы.</description>
-<styleUrl>#s-d5</styleUrl>
+<styleUrl>#s-d7</styleUrl>
 <Point><coordinates>135.784439,34.994303,0</coordinates></Point>
 </Placemark>
 <Placemark>
-<name>Д5.3 Ninenzaka / Sannenzaka</name>
+<name>Д7.3 Ninenzaka / Sannenzaka</name>
 <description>Мощёные улочки-лестницы со старыми лавками и сувенирами — спуск от Kiyomizu-dera в сторону Kodai-ji.</description>
-<styleUrl>#s-d5</styleUrl>
+<styleUrl>#s-d7</styleUrl>
 <Point><coordinates>135.780743,34.998997,0</coordinates></Point>
 </Placemark>
 <Placemark>
-<name>Д5.4 Kodai-ji</name>
+<name>Д7.4 Kodai-ji</name>
 <description>Храм со своей бамбуковой рощей и чайными домиками — заметно тише знаменитой рощи в Arashiyama.</description>
-<styleUrl>#s-d5</styleUrl>
+<styleUrl>#s-d7</styleUrl>
 <Point><coordinates>135.780596,35.000303,0</coordinates></Point>
 </Placemark>
 <Placemark>
-<name>Д5 · АВТОБУС Fushimi Inari → Kiyomizu-dera, Keihan + автобус</name>
+<name>Д7 · АВТОБУС Fushimi Inari → Kiyomizu-dera, Keihan + автобус</name>
 <description>20–25 мин · 230 ¥</description>
-<styleUrl>#s-d5</styleUrl>
+<styleUrl>#s-d7</styleUrl>
 <LineString><tessellate>1</tessellate><coordinates>135.77971,34.967519,0 135.761911,34.92898,0 135.759258,34.930297,0 135.75883,34.93111,0 135.75836,34.93359,0 135.757895,34.936194,0 135.757277,34.941398,0 135.757533,34.945446,0 135.758419,34.947534,0 135.758874,34.950637,0 135.760458,34.956654,0 135.761936,34.963346,0 135.76255,34.967377,0 135.763075,34.972374,0 135.763956,34.977061,0 135.766254,34.980296,0 135.772864,34.981767,0 135.773959,34.983621,0 135.77421,34.986709,0 135.774689,34.991147,0 135.776306,34.994424,0 135.779106,34.995631,0 135.779925,34.997086,0 135.781185,34.996584,0 135.782432,34.996028,0 135.78327,34.996009,0 135.784439,34.994303,0</coordinates></LineString>
 </Placemark>
 <Placemark>
-<name>Д5 · ПЕШКОМ спуск по улочкам Хигасиямы</name>
+<name>Д7 · ПЕШКОМ спуск по улочкам Хигасиямы</name>
 <description>13 мин · бесплатно</description>
-<styleUrl>#s-d5</styleUrl>
+<styleUrl>#s-d7</styleUrl>
 <LineString><tessellate>1</tessellate><coordinates>135.784439,34.994303,0 135.784548,34.994281,0 135.784558,34.994177,0 135.784627,34.993922,0 135.784988,34.993989,0 135.785152,34.994387,0 135.784875,34.99453,0 135.784553,34.99459,0 135.783514,34.994791,0 135.78355,34.994926,0 135.783347,34.995071,0 135.7833,34.9953,0 135.783076,34.995509,0 135.782917,34.995513,0 135.782203,34.995514,0 135.782057,34.995565,0 135.781902,34.995675,0 135.781696,34.995793,0 135.780791,34.996178,0 135.781019,34.996657,0 135.781063,34.997495,0 135.78104,34.997789,0 135.780965,34.997897,0 135.780814,34.998022,0 135.780852,34.998162,0 135.78083,34.998602,0 135.780743,34.998997,0</coordinates></LineString>
 </Placemark>
 <Placemark>
-<name>Д5 · ПЕШКОМ переулками к Kodai-ji</name>
+<name>Д7 · ПЕШКОМ переулками к Kodai-ji</name>
 <description>4 мин · бесплатно</description>
-<styleUrl>#s-d5</styleUrl>
+<styleUrl>#s-d7</styleUrl>
 <LineString><tessellate>1</tessellate><coordinates>135.780743,34.998997,0 135.780718,34.999062,0 135.780712,34.999147,0 135.780704,34.999268,0 135.780804,34.999275,0 135.780914,34.999276,0 135.78126,34.999295,0 135.781315,34.999309,0 135.781428,34.999343,0 135.781393,34.99945,0 135.781232,34.999418,0 135.781013,34.999396,0 135.780984,34.999389,0 135.780794,34.999384,0 135.780794,34.999462,0 135.780752,34.999473,0 135.780652,34.999505,0 135.780655,34.999738,0 135.780725,34.999736,0 135.780761,34.999973,0 135.780772,35.000048,0 135.780795,35.000193,0 135.780807,35.000265,0 135.78081,35.000283,0 135.780805,35.00032,0 135.780717,35.000329,0 135.780596,35.000303,0</coordinates></LineString>
-</Placemark>
-<Placemark>
-<name>Д6.1 Вокзал Киото</name>
-<description>Старт дня: отсюда синкансэном или обычной электричкой едете в Химэдзи. Здесь же берут экибэн — региональный бенто в коробке, который продают именно на вокзалах.</description>
-<styleUrl>#s-d6</styleUrl>
-<Point><coordinates>135.758095,34.987076,0</coordinates></Point>
-</Placemark>
-<Placemark>
-<name>Д6.2 Станция Химэдзи</name>
-<description>Точка прибытия в Химэдзи. На станции берут экибэн перед замком — это часть ритуала, а не компромисс. От станции к замку ведёт прямая широкая улица.</description>
-<styleUrl>#s-d6</styleUrl>
-<Point><coordinates>134.690242,34.826901,0</coordinates></Point>
-</Placemark>
-<Placemark>
-<name>Д6.3 Замок Химэдзи</name>
-<description>Единственный из крупных японских замков, сохранившийся в оригинале, а не бетонная реконструкция: деревянные лестницы, узкие переходы, реальный масштаб обороны XVII века. Работает 9:00–17:00, вход только до 16:00. Билет ¥2500 со взрослого, комбинированный с садом Коко-эн — ¥2600.</description>
-<styleUrl>#s-d6</styleUrl>
-<Point><coordinates>134.69402,34.839331,0</coordinates></Point>
-</Placemark>
-<Placemark>
-<name>Д6.4 Сад Коко-эн</name>
-<description>Девять садов в японском стиле эпохи Эдо рядом с замком. Здесь устраивают пикник с бэнто — по сравнению с самим замком почти без туристов.</description>
-<styleUrl>#s-d6</styleUrl>
-<Point><coordinates>134.689613,34.837969,0</coordinates></Point>
-</Placemark>
-<Placemark>
-<name>Д6.5 Рынок Нисики</name>
-<description>Возврат в Киото к ужину. Днём рынок забит под завязку, а к вечеру часть лавок ещё работает и уже спокойно — хорошее место закрыть свободный вечер.</description>
-<styleUrl>#s-d6</styleUrl>
-<Point><coordinates>135.76557,35.005024,0</coordinates></Point>
-</Placemark>
-<Placemark>
-<name>Д6 · СИНКАНСЭН Shinkansen Hikari, Киото → Химэдзи (схематично: прямая, реальной трассы нет)</name>
-<description>35–40 мин · 3400 ¥</description>
-<styleUrl>#s-d6</styleUrl>
-<LineString><tessellate>1</tessellate><coordinates>135.758095,34.987076,0 134.690242,34.826901,0</coordinates></LineString>
-</Placemark>
-<Placemark>
-<name>Д6 · ПЕШКОМ от станции Химэдзи по главной улице к замку</name>
-<description>25 мин · бесплатно</description>
-<styleUrl>#s-d6</styleUrl>
-<LineString><tessellate>1</tessellate><coordinates>134.690242,34.826901,0 134.690185,34.827221,0 134.690439,34.827858,0 134.690199,34.828074,0 134.690659,34.829446,0 134.691091,34.830717,0 134.691851,34.833095,0 134.692167,34.834037,0 134.692563,34.835283,0 134.6925,34.835619,0 134.692857,34.835888,0 134.693192,34.836063,0 134.692681,34.83672,0 134.692666,34.838145,0 134.692664,34.838402,0 134.692462,34.838761,0 134.69271,34.839356,0 134.693002,34.839543,0 134.693086,34.839636,0 134.693258,34.839615,0 134.693654,34.839665,0 134.693647,34.839622,0 134.693623,34.839547,0 134.693688,34.839309,0 134.693822,34.839356,0 134.69402,34.839331,0</coordinates></LineString>
-</Placemark>
-<Placemark>
-<name>Д6 · ПЕШКОМ от донжона замка через ворота к саду Коко-эн</name>
-<description>17 мин · бесплатно</description>
-<styleUrl>#s-d6</styleUrl>
-<LineString><tessellate>1</tessellate><coordinates>134.69402,34.839331,0 134.693822,34.839356,0 134.693688,34.839309,0 134.693623,34.839547,0 134.693647,34.839622,0 134.693654,34.839665,0 134.693258,34.839615,0 134.693086,34.839636,0 134.693002,34.839543,0 134.69271,34.839356,0 134.692462,34.838761,0 134.692664,34.838402,0 134.692666,34.838145,0 134.692681,34.83672,0 134.693192,34.836063,0 134.692857,34.835888,0 134.6925,34.835619,0 134.691906,34.835866,0 134.690275,34.836717,0 134.690458,34.837302,0 134.690498,34.837777,0 134.690341,34.837836,0 134.690203,34.83786,0 134.68982,34.837886,0 134.689647,34.837988,0 134.689613,34.837969,0</coordinates></LineString>
-</Placemark>
-<Placemark>
-<name>Д6 · СИНКАНСЭН Химэдзи → Киото, далее метро/пешком до Нисики (схематично: прямая, реальной трассы нет)</name>
-<description>35–40 мин + 15 мин по Киото · 3400 ¥</description>
-<styleUrl>#s-d6</styleUrl>
-<LineString><tessellate>1</tessellate><coordinates>134.689613,34.837969,0 135.76557,35.005024,0</coordinates></LineString>
-</Placemark>
-</Folder>
-<Folder>
-<name>Д7–Д8 · Кобэ / Авадзи, Коясан</name>
-<Placemark>
-<name>Д7.1 Кобэ, Санномия</name>
-<description>Точка входа в Кобэ; отсюда же уходят автобусы на Авадзи.</description>
-<styleUrl>#s-d7</styleUrl>
-<Point><coordinates>135.195417,34.693375,0</coordinates></Point>
-</Placemark>
-<Placemark>
-<name>Д7.2 Нанкинмати (Чайнатаун)</name>
-<description>Настоящий китайский квартал с уличной едой — заскочить утром самое то, отдельного дня не стоит.</description>
-<styleUrl>#s-d7</styleUrl>
-<Point><coordinates>135.188382,34.688107,0</coordinates></Point>
-</Placemark>
-<Placemark>
-<name>Д7.3 Китано-Идзинкан</name>
-<description>Деревянные особняки посольств XIX века — необычный для Японии архитектурный микс.</description>
-<styleUrl>#s-d7</styleUrl>
-<Point><coordinates>135.191278,34.70097,0</coordinates></Point>
-</Placemark>
-<Placemark>
-<name>Д7.4 Nijigen no Mori, Авадзи</name>
-<description>Зоны по Наруто, Годзилле, Dragon Quest и Monster Hunter. Билет в каждую зону отдельный.</description>
-<styleUrl>#s-d7</styleUrl>
-<Point><coordinates>135.002126,34.574838,0</coordinates></Point>
-</Placemark>
-<Placemark>
-<name>Д7.5 Гора Рокко</name>
-<description>Фуникулёр наверх: сверху виден весь осакский залив, под вечер это лучший вид дня.</description>
-<styleUrl>#s-d7</styleUrl>
-<Point><coordinates>135.263745,34.777992,0</coordinates></Point>
-</Placemark>
-<Placemark>
-<name>Д7 · ПЕШКОМ к Чайнатауну</name>
-<description>14 мин · бесплатно</description>
-<styleUrl>#s-d7</styleUrl>
-<LineString><tessellate>1</tessellate><coordinates>135.195417,34.693375,0 135.195283,34.693297,0 135.194943,34.693147,0 135.194844,34.692935,0 135.19493,34.692572,0 135.194593,34.692448,0 135.194928,34.691826,0 135.194975,34.691539,0 135.194662,34.691366,0 135.193169,34.69082,0 135.192327,34.690528,0 135.192117,34.690446,0 135.191364,34.690063,0 135.190801,34.689791,0 135.190171,34.689448,0 135.189674,34.689251,0 135.189537,34.688917,0 135.189558,34.688537,0 135.189451,34.688335,0 135.189324,34.688318,0 135.189162,34.688279,0 135.188822,34.688168,0 135.188672,34.688126,0 135.188382,34.688107,0</coordinates></LineString>
-</Placemark>
-<Placemark>
-<name>Д7 · ПЕШКОМ вверх к Китано</name>
-<description>25 мин · бесплатно</description>
-<styleUrl>#s-d7</styleUrl>
-<LineString><tessellate>1</tessellate><coordinates>135.188382,34.688107,0 135.18852,34.688095,0 135.188672,34.688126,0 135.188872,34.688186,0 135.189154,34.688814,0 135.188775,34.689849,0 135.189014,34.689928,0 135.189794,34.690524,0 135.189976,34.690909,0 135.190095,34.691085,0 135.190075,34.691296,0 135.191602,34.692276,0 135.191627,34.692401,0 135.192655,34.693331,0 135.193372,34.694086,0 135.1932,34.694315,0 135.192925,34.694875,0 135.192348,34.696335,0 135.19217,34.696778,0 135.192024,34.697063,0 135.191438,34.698072,0 135.190592,34.699421,0 135.190123,34.700471,0 135.191278,34.70097,0</coordinates></LineString>
-</Placemark>
-<Placemark>
-<name>Д7 · АВТОБУС по мосту Акаси-Кайкё</name>
-<description>45 мин · 2000 ¥</description>
-<styleUrl>#s-d7</styleUrl>
-<LineString><tessellate>1</tessellate><coordinates>135.191278,34.70097,0 135.191292,34.700942,0 135.186902,34.696486,0 135.182848,34.688608,0 135.18523,34.685161,0 135.178158,34.675755,0 135.167323,34.667226,0 135.134163,34.647009,0 135.130408,34.649589,0 135.116123,34.655458,0 135.106188,34.650453,0 135.08991,34.65193,0 135.07889,34.648986,0 135.06973,34.651005,0 135.066303,34.659286,0 135.069626,34.659652,0 135.062386,34.653098,0 135.035571,34.633998,0 135.011812,34.589173,0 135.018467,34.580897,0 135.017274,34.58507,0 135.007842,34.58143,0 135.000519,34.575675,0 135.002126,34.574838,0</coordinates></LineString>
-</Placemark>
-<Placemark>
-<name>Д7 · КАНАТКА автобус обратно + фуникулёр на Рокко (схематично: прямая, реальной трассы нет)</name>
-<description>90 мин · бесплатно</description>
-<styleUrl>#s-d7</styleUrl>
-<LineString><tessellate>1</tessellate><coordinates>135.002126,34.574838,0 135.263745,34.777992,0</coordinates></LineString>
 </Placemark>
 <Placemark>
 <name>Д8.1 Станция Киото</name>
