@@ -22,3 +22,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# База знаний wrenjapan: 70 статей дословно, сохранены для личного использования.
+# Права на текст принадлежат wrenjapan.com — в публичный репозиторий не уходят.
+# Как восстановить — docs/knowledge/README.md
+docs/knowledge/wrenjapan/*.md
+!docs/knowledge/wrenjapan/INDEX.md
