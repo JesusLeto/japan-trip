@@ -2,7 +2,7 @@ const FALLBACK_COLOR = '#8A94A6';
 
 /**
  * Resolves a day's accent colour. Day labels can name several cities
- * ("Кобэ / Авадзи", "Коясан → Хаконэ") — the first one wins.
+ * ("Кобэ / Авадзи", "Киото → Токио") — the first one wins.
  */
 export function resolveCityColor(cities: Record<string, string>, cityLabel: string): string {
   if (cities[cityLabel]) return cities[cityLabel];
