@@ -3,7 +3,7 @@ import L from 'leaflet';
 import { resolveCityColor } from '../../utils/cityColor';
 import type { TripData, TripDay, TripPoint } from '../../types/trip';
 
-const TILE_URL = 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png';
+const TILE_URL = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
 const MONO_FONT = "ui-monospace,'SF Mono',Menlo,Consolas,monospace";
 
 export interface RouteMapHandle {
@@ -61,8 +61,7 @@ export function RouteMap({ trip, day, ref }: RouteMapProps) {
 
     const tileLayer = L.tileLayer(TILE_URL, {
       maxZoom: 19,
-      subdomains: 'abcd',
-      attribution: '&copy; OpenStreetMap · &copy; CARTO',
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     });
     tileLayer.on('tileerror', () => {
       tileErrorsRef.current += 1;
@@ -183,7 +182,7 @@ export function RouteMap({ trip, day, ref }: RouteMapProps) {
     <div className="relative overflow-hidden rounded-[4px] border border-bg-active">
       <div ref={containerRef} className="h-[560px] bg-bg max-[900px]:h-[60vh]" />
       {tilesFailed && (
-        <div className="absolute inset-0 z-[800] overflow-auto bg-bg-raised p-5">
+        <div className="absolute inset-0 z-[1050] overflow-auto bg-bg-raised p-5">
           <div className="mb-3 font-mono text-xs font-semibold tracking-[0.08em] text-accent">
             КАРТА НЕ ЗАГРУЗИЛАСЬ — ТОЧКИ СПИСКОМ
           </div>
